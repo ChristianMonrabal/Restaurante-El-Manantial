@@ -35,11 +35,11 @@ CREATE TABLE tbl_ocupacion (
 );
 
 INSERT INTO tbl_sala (id_sala, nombre_sala, tipo_sala, capacidad_total) VALUES
-(1, 'terraza_principal', 'terraza', 50),
-(2, 'terraza_secundaria', 'terraza', 60),
-(3, 'terraza_terciaria', 'terraza', 70),
-(4, 'comedor_interior', 'comedor', 40),
-(5, 'comedor_exterior', 'comedor', 30),
+(1, 'terraza_principal', 'terraza', 14),
+(2, 'terraza_secundaria', 'terraza', 14),
+(3, 'terraza_terciaria', 'terraza', 14),
+(4, 'comedor_interior', 'comedor', 29),
+(5, 'comedor_exterior', 'comedor', 24),
 (6, 'sala_privada_1', 'privada', 10),
 (7, 'sala_privada_2', 'privada', 10),
 (8, 'sala_privada_3', 'privada', 10),

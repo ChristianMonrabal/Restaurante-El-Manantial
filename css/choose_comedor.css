@@ -22,10 +22,12 @@ body {
 .navbar .user-info {
     display: flex;
     align-items: center;
+    margin-right: 20px;
 }
 
 .navbar .user-info span {
     margin-left: 40px;
+    margin-right: 20px;
 }
 
 .dropdown i {
@@ -35,6 +37,7 @@ body {
 .dropdown {
     position: relative;
     display: inline-block;
+    margin-right: 20px;
 }
 
 .dropdown-content {
