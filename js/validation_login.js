@@ -28,7 +28,14 @@ function validaCodigoCamarero() {
         codigoError.textContent = "El código de empleado debe tener 4 caracteres."; // Mensaje de error.
         input_empleado.classList.add("error-border"); // Añade un borde rojo al campo.
         return false; // Devuelve false.
-    } else {
+    
+    } 
+    else if(codigo_empleado.length > 4){
+        codigoError.textContent = "El código de empleado debe tener 4 caracteres."; // Mensaje de error.
+        input_empleado.classList.add("error-border"); // Añade un borde rojo al campo.
+        return false; // Devuelve false.
+    }
+    else {
         // Si el código es válido, borra el mensaje de error y quita el borde rojo.
         codigoError.textContent = "";
         input_empleado.classList.remove("error-border");
@@ -51,7 +58,7 @@ function validaPassword() {
     } 
     // Si la contraseña tiene menos de 8 caracteres, muestra un mensaje de error.
     else if(pwd.length < 8){
-        pwdError.textContent = "La contraseña debe tener 9 caracteres."; // Mensaje de error.
+        pwdError.textContent = "La contraseña debe tener 8 caracteres."; // Mensaje de error.
         input_pwd.classList.add("error-border"); // Añade un borde rojo al campo.
         return false; // Devuelve false.
     } 
