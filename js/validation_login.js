@@ -25,16 +25,12 @@ function validaCodigoCamarero() {
     } 
     // Si el código de empleado tiene menos de 4 caracteres, muestra un mensaje de error.
     else if(codigo_empleado.length < 4){
-        codigoError.textContent = "El código de empleado debe tener 4 caracteres."; // Mensaje de error.
+        codigoError.textContent = "El código de empleado debe tener minimo 4 caracteres."; // Mensaje de error.
         input_empleado.classList.add("error-border"); // Añade un borde rojo al campo.
         return false; // Devuelve false.
     
     } 
-    else if(codigo_empleado.length > 4){
-        codigoError.textContent = "El código de empleado debe tener 4 caracteres."; // Mensaje de error.
-        input_empleado.classList.add("error-border"); // Añade un borde rojo al campo.
-        return false; // Devuelve false.
-    }
+
     else {
         // Si el código es válido, borra el mensaje de error y quita el borde rojo.
         codigoError.textContent = "";
