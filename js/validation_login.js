@@ -23,13 +23,6 @@ function validaCodigoCamarero() {
         input_empleado.classList.add("error-border"); // Añade un borde rojo al campo.
         return false; // Devuelve false, indicando que el campo es inválido.
     } 
-    // Si el código de empleado tiene menos de 4 caracteres, muestra un mensaje de error.
-    else if(codigo_empleado.length < 4){
-        codigoError.textContent = "El código de empleado debe tener minimo 4 caracteres."; // Mensaje de error.
-        input_empleado.classList.add("error-border"); // Añade un borde rojo al campo.
-        return false; // Devuelve false.
-    
-    } 
 
     else {
         // Si el código es válido, borra el mensaje de error y quita el borde rojo.
@@ -51,18 +44,6 @@ function validaPassword() {
         pwdError.textContent = "La contraseña es obligatoria."; // Mensaje de error.
         input_pwd.classList.add("error-border"); // Añade un borde rojo al campo.
         return false; // Devuelve false, indicando que el campo es inválido.
-    } 
-    // Si la contraseña tiene menos de 8 caracteres, muestra un mensaje de error.
-    else if(pwd.length < 8){
-        pwdError.textContent = "La contraseña debe tener 8 caracteres."; // Mensaje de error.
-        input_pwd.classList.add("error-border"); // Añade un borde rojo al campo.
-        return false; // Devuelve false.
-    } 
-    // Si la contraseña no contiene al menos una mayúscula, una minúscula y un número, muestra un mensaje de error.
-    else if(!pwd.match(/[A-Z]/) || !pwd.match(/[a-z]/) || !pwd.match(/[0-9]/)){
-        pwdError.textContent = "La contraseña debe contener al menos una letra mayúscula o minúscula y un número."; // Mensaje de error.
-        input_pwd.classList.add("error-border"); // Añade un borde rojo al campo.
-        return false; // Devuelve false.
     } else {
         // Si la contraseña es válida, borra el mensaje de error y quita el borde rojo.
         pwdError.textContent = "";
