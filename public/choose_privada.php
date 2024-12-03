@@ -22,7 +22,7 @@ if (!isset($_SESSION['loggedin'])) {
 <body>
 <div class="navbar">
         <a href="../index.php">
-            <img src="../img/icon.png" class="icon" alt="Icono">
+            <img src="../img/icon.png" class="icon">
         </a>
         <div class="user-info">
         <div class="dropdown">

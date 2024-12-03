@@ -51,12 +51,19 @@ if (!isset($_SESSION['loggedin'])) {
             <select name="sala" id="sala">
                 <option value="">Seleccionar Sala</option>
                 <?php
+                // Consultar las salas desde la base de datos
                 $querySalas = "SELECT id_sala, nombre_sala FROM tbl_sala";
-                $resultSalas = mysqli_query($conn, $querySalas);
-
-                while ($row = mysqli_fetch_assoc($resultSalas)) {
-                    $selected = (isset($_GET['sala']) && $_GET['sala'] == $row['id_sala']) ? 'selected' : '';
-                    echo "<option value='{$row['id_sala']}' $selected>{$row['nombre_sala']}</option>";
+                try {
+                    $stmtSalas = $conn->prepare($querySalas);
+                    $stmtSalas->execute();
+                    $resultSalas = $stmtSalas->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    foreach ($resultSalas as $row) {
+                        $selected = (isset($_GET['sala']) && $_GET['sala'] == $row['id_sala']) ? 'selected' : '';
+                        echo "<option value='{$row['id_sala']}' $selected>{$row['nombre_sala']}</option>";
+                    }
+                } catch (PDOException $e) {
+                    echo "<option value=''>Error al cargar las salas</option>";
                 }
                 ?>
             </select>
@@ -73,7 +80,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <p class="red"><?php echo $noResultsMessage; ?></p>
             <?php endif; ?>
 
-            <?php if ($result && mysqli_num_rows($result) > 0): ?>
+            <?php if ($result && count($result) > 0): ?>
                 <table>
                     <tr>
                         <th>ID Ocupación</th>
@@ -82,15 +89,15 @@ if (!isset($_SESSION['loggedin'])) {
                         <th>Fecha Ocupación</th>
                         <th>Fecha Desocupación</th>
                     </tr>
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                    <?php foreach ($result as $row): ?>
                         <tr>
                             <td><?= htmlspecialchars($row['id_ocupacion']) ?></td>
-                            <td><?= htmlspecialchars($row['nombre_camarero']) ?></td>
+                            <td><?= htmlspecialchars($row['camarero']) ?></td>
                             <td><?= htmlspecialchars($row['id_mesa']) ?></td>
                             <td><?= htmlspecialchars($row['fecha_hora_ocupacion']) ?></td>
                             <td><?= htmlspecialchars($row['fecha_hora_desocupacion'] ?? 'Sin desocupar') ?></td>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 </table>
             <?php endif; ?>
         </div>

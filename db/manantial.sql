@@ -1,38 +1,64 @@
-CREATE DATABASE elmanantial;
+CREATE DATABASE elmanantial2;
 
-USE elmanantial;
+USE elmanantial2;
 
+-- Tabla de salas
 CREATE TABLE tbl_sala (
-    id_sala INT PRIMARY KEY,
+    id_sala INT AUTO_INCREMENT PRIMARY KEY,
     nombre_sala VARCHAR(25) NOT NULL,
     tipo_sala ENUM('terraza', 'comedor', 'privada') NOT NULL,
-    capacidad_total INT NOT NULL
+    capacidad_total INT NOT NULL,
+    imagen_sala VARCHAR(255)
 );
 
+-- Tabla de mesas
 CREATE TABLE tbl_mesa (
-    id_mesa INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    id_mesa INT AUTO_INCREMENT PRIMARY KEY,
     id_sala INT NOT NULL,
     num_sillas_mesa INT NOT NULL,
     estado_mesa ENUM('libre', 'ocupada') NOT NULL DEFAULT 'libre',
     FOREIGN KEY (id_sala) REFERENCES tbl_sala(id_sala)
 );
 
-CREATE TABLE tbl_camarero (
-    id_camarero INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    nombre_camarero VARCHAR(30) NOT NULL,
-    codigo_camarero CHAR(4) NOT NULL UNIQUE,
-    password_camarero VARCHAR(255) NOT NULL
+-- Tabla de usuarios
+CREATE TABLE tbl_usuario (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(30) NOT NULL,
+    tipo_usuario ENUM('camarero', 'gerente', 'mantenimiento', 'administrador') NOT NULL,
+    email_usuario VARCHAR(50) NOT NULL UNIQUE,
+    password_usuario VARCHAR(255) NOT NULL
 );
 
+-- Tabla de reservas
+CREATE TABLE tbl_reserva (
+    id_reserva INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_sala INT NOT NULL,
+    fecha_reserva DATE NOT NULL,
+    hora_inicio TIME NOT NULL,
+    hora_fin TIME NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES tbl_usuario(id_usuario),
+    FOREIGN KEY (id_sala) REFERENCES tbl_sala(id_sala)
+);
+
+-- Tabla de ocupación de mesas
 CREATE TABLE tbl_ocupacion (
-    id_ocupacion INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    id_ocupacion INT AUTO_INCREMENT PRIMARY KEY,
     id_mesa INT NOT NULL,
-    id_camarero INT NOT NULL,
+    id_usuario INT NOT NULL,
     fecha_hora_ocupacion DATETIME NOT NULL,
     fecha_hora_desocupacion DATETIME,
     FOREIGN KEY (id_mesa) REFERENCES tbl_mesa(id_mesa),
-    FOREIGN KEY (id_camarero) REFERENCES tbl_camarero(id_camarero)
+    FOREIGN KEY (id_usuario) REFERENCES tbl_usuario(id_usuario)
 );
+
+-- Tabla de recursos adicionales
+CREATE TABLE tbl_recurso (
+    id_recurso INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_recurso ENUM('mesa', 'silla', 'otro') NOT NULL,
+    descripcion_recurso VARCHAR(100) NOT NULL
+);
+
 
 INSERT INTO tbl_sala (id_sala, nombre_sala, tipo_sala, capacidad_total) VALUES
 (1, 'terraza_principal', 'terraza', 14),
@@ -93,8 +119,8 @@ INSERT INTO tbl_mesa (id_sala, num_sillas_mesa, estado_mesa) VALUES
 -- Sala Privada 4
 (9, 10, 'libre');
 
-INSERT INTO tbl_camarero (nombre_camarero, codigo_camarero, password_camarero) VALUES
-('Christian Monrabal', 'C001', '$2a$12$NtbM8IYMhhkOlUl9uZ7XMenWrzmSEp6DcFfQijiMs/cmjwN2MP2bi'), -- qweQWE123
-('Adrian Martin', 'C002', '$2a$12$DB3.O4aga98EH./zW9P9beKfklJkTcXMY0AnL3T6nheQhpM3usreO'), -- asdASD456
-('Alejandro González ', 'C003', '$2a$12$b509yhiIiUsHDKfE8HdNnea.1OEVhd4ukrnc54axOg5TDuDE2MNgC'),-- zxcZXC789
-('Oriol Godoy', 'C004', '$2b$12$v79zM4PPHJuyzcydT8SYmOMKT0VaBS.fQNgrLphkto3TRW00VDoYy'); -- qazQAZ000
+INSERT INTO tbl_usuario (nombre_usuario, tipo_usuario, email_usuario, password_usuario) VALUES
+('christian.monrabal', 'camarero', 'christian.monrabal@elmanantial.com', '$2a$12$NtbM8IYMhhkOlUl9uZ7XMenWrzmSEp6DcFfQijiMs/cmjwN2MP2bi'),
+('anuel.aa', 'camarero', 'anuel.aa@elmanantial.com', '$2a$12$NtbM8IYMhhkOlUl9uZ7XMenWrzmSEp6DcFfQijiMs/cmjwN2MP2bi'),
+('laura.perez', 'gerente', 'laura.perez@elmanantial.com', '$2a$12$NtbM8IYMhhkOlUl9uZ7XMenWrzmSEp6DcFfQijiMs/cmjwN2MP2bi'),
+('carlos.gomez', 'mantenimiento', 'carlos.gomez@elmanantial.com', '$2a$12$NtbM8IYMhhkOlUl9uZ7XMenWrzmSEp6DcFfQijiMs/cmjwN2MP2bi');

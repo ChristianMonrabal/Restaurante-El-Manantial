@@ -20,7 +20,7 @@ if (!isset($_SESSION['loggedin'])) {
 <body>
 <div class="navbar">
     <a href="../index.php">
-        <img src="../img/icon.png" class="icon" alt="Icono">
+        <img src="../img/icon.png" class="icon">
     </a>
     <a href="./historial.php" class="right-link">Historial</a>
     <div class="user-info">
@@ -54,7 +54,7 @@ if (!isset($_SESSION['loggedin'])) {
         <div class="button-container">
             <a href="./choose_comedor.php" class="select-button">Seleccionar</a>
         </div>
-    </div>
+    </div>g
     <div class="option privadas">
         <h2>Sala privada</h2>
         <div class="button-container">

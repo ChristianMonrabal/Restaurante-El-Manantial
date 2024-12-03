@@ -6,81 +6,39 @@ $success = $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['ocupar'])){ 
     $mesa_id = $_POST['ocupar'];
-    $camarero_id = $_SESSION['usuario_id'];
+    $camarero_id = $_SESSION['usuario_id']; // Asegúrate de que esto esté bien definido en la sesión.
+    
     try {
-        mysqli_autocommit($conn, false);
-        mysqli_begin_transaction($conn, MYSQLI_TRANS_START_READ_WRITE);
-        
-        $queryReserva = "INSERT INTO tbl_ocupacion (id_mesa, id_camarero, fecha_hora_ocupacion) VALUES (?,?,NOW())";
-        $stmtReserva = mysqli_prepare($conn, $queryReserva);
-        mysqli_stmt_bind_param($stmtReserva, "ii", $mesa_id, $camarero_id);
+        // Iniciar transacción
+        $conn->beginTransaction();
 
-        if (mysqli_stmt_execute($stmtReserva)) {
+        // Insertar la ocupación en la tabla tbl_ocupacion
+        $queryReserva = "INSERT INTO tbl_ocupacion (id_mesa, id_usuario, fecha_hora_ocupacion) VALUES (?, ?, NOW())";
+        $stmtReserva = $conn->prepare($queryReserva);
+        $stmtReserva->bindParam(1, $mesa_id, PDO::PARAM_INT);
+        $stmtReserva->bindParam(2, $camarero_id, PDO::PARAM_INT);
+
+        if ($stmtReserva->execute()) {
+            // Actualizar estado de la mesa a 'ocupada'
             $updateQuery = "UPDATE tbl_mesa SET estado_mesa = 'ocupada' WHERE id_mesa = ?";
-            $stmtUpdate = mysqli_prepare($conn, $updateQuery);
-            mysqli_stmt_bind_param($stmtUpdate, "i", $mesa_id);
-            mysqli_stmt_execute($stmtUpdate);
+            $stmtUpdate = $conn->prepare($updateQuery);
+            $stmtUpdate->bindParam(1, $mesa_id, PDO::PARAM_INT);
+            $stmtUpdate->execute();
 
             $success = "Mesa ocupada con éxito.";
+            $conn->commit();  // Commit de la transacción
         } else {
             $error = "Hubo un error al hacer la reserva.";
+            $conn->rollBack();  // Rollback de la transacción
         }
 
-        mysqli_commit($conn);
-        mysqli_stmt_close($stmtReserva);
-        mysqli_stmt_close($stmtUpdate);
+        // Cerrar las sentencias
+        $stmtReserva = null;
+        $stmtUpdate = null;
+
     } catch (Exception $e) {
-        mysqli_rollback($conn);
-        $error = $e->getMessage();
-    }
-
-    if (!$error) {
-        echo "<script>showSweetAlert('success', 'Éxito', '$success');</script>";
-    } else {
-        echo "<script>showSweetAlert('error', 'Error', '$error');</script>";
-    }
-    exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['desocupar'])) {
-    $mesa_id = $_POST['desocupar'];
-    $camarero_id = $_SESSION['usuario_id'];
-    
-    // Iniciar la transacción
-    try {
-        mysqli_autocommit($conn, false);
-        mysqli_begin_transaction($conn, MYSQLI_TRANS_START_READ_WRITE);
-
-        // Actualizar la ocupación más reciente de la mesa para establecer la hora de desocupación
-        $updateOcupacion = "UPDATE tbl_ocupacion 
-                            SET fecha_hora_desocupacion = NOW() 
-                            WHERE id_mesa = ? AND id_camarero = ? AND fecha_hora_desocupacion IS NULL";
-        $stmtOcupacion = mysqli_prepare($conn, $updateOcupacion);
-        mysqli_stmt_bind_param($stmtOcupacion, "ii", $mesa_id, $camarero_id);
-
-        if (mysqli_stmt_execute($stmtOcupacion)) {
-            // Cambiar el estado de la mesa a 'libre'
-            $updateMesa = "UPDATE tbl_mesa SET estado_mesa = 'libre' WHERE id_mesa = ?";
-            $stmtUpdateMesa = mysqli_prepare($conn, $updateMesa);
-            mysqli_stmt_bind_param($stmtUpdateMesa, "i", $mesa_id);
-
-            if (mysqli_stmt_execute($stmtUpdateMesa)) {
-                $success = "Mesa desocupada con éxito.";
-                mysqli_commit($conn);
-            } else {
-                $error = "Hubo un error al actualizar el estado de la mesa.";
-                mysqli_rollback($conn);
-            }
-
-            mysqli_stmt_close($stmtUpdateMesa);
-        } else {
-            $error = "Hubo un error al registrar la desocupación en la ocupación.";
-            mysqli_rollback($conn);
-        }
-
-        mysqli_stmt_close($stmtOcupacion);
-    } catch (Exception $e) {
-        mysqli_rollback($conn);
+        // En caso de error, hacer rollback y capturar el error
+        $conn->rollBack();
         $error = $e->getMessage();
     }
 
@@ -93,4 +51,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['desocupar'])) {
     exit();
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['desocupar'])) {
+    $mesa_id = $_POST['desocupar'];
+    $camarero_id = $_SESSION['usuario_id']; // Asegúrate de que este ID sea el correcto en la sesión.
+    
+    try {
+        // Iniciar transacción
+        $conn->beginTransaction();
+
+        // Actualizar la ocupación más reciente para la mesa
+        $updateOcupacion = "UPDATE tbl_ocupacion 
+                            SET fecha_hora_desocupacion = NOW() 
+                            WHERE id_mesa = ? AND id_usuario = ? AND fecha_hora_desocupacion IS NULL";
+        $stmtOcupacion = $conn->prepare($updateOcupacion);
+        $stmtOcupacion->bindParam(1, $mesa_id, PDO::PARAM_INT);
+        $stmtOcupacion->bindParam(2, $camarero_id, PDO::PARAM_INT);
+
+        if ($stmtOcupacion->execute()) {
+            // Cambiar el estado de la mesa a 'libre'
+            $updateMesa = "UPDATE tbl_mesa SET estado_mesa = 'libre' WHERE id_mesa = ?";
+            $stmtUpdateMesa = $conn->prepare($updateMesa);
+            $stmtUpdateMesa->bindParam(1, $mesa_id, PDO::PARAM_INT);
+
+            if ($stmtUpdateMesa->execute()) {
+                $success = "Mesa desocupada con éxito.";
+                $conn->commit();  // Commit de la transacción
+            } else {
+                $error = "Hubo un error al actualizar el estado de la mesa.";
+                $conn->rollBack();  // Rollback de la transacción
+            }
+
+            $stmtUpdateMesa = null;
+        } else {
+            $error = "Hubo un error al registrar la desocupación en la ocupación.";
+            $conn->rollBack();  // Rollback de la transacción
+        }
+
+        $stmtOcupacion = null;
+
+    } catch (Exception $e) {
+        // En caso de error, hacer rollback y capturar el error
+        $conn->rollBack();
+        $error = $e->getMessage();
+    }
+
+    // Mostrar el mensaje adecuado
+    if (!$error) {
+        echo "<script>showSweetAlert('success', 'Éxito', '$success');</script>";
+    } else {
+        echo "<script>showSweetAlert('error', 'Error', '$error');</script>";
+    }
+    exit();
+}
 ?>
