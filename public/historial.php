@@ -19,10 +19,13 @@ if (!isset($_SESSION['loggedin'])) {
 </head>
 <body>
 <div class="navbar">
-        <a href="../index.php">
-            <img src="../img/icon.png" class="icon" alt="Icono">
-        </a>
-        <div class="user-info">
+    <a href="../index.php">
+        <img src="../img/icon.png" class="icon">
+    </a>
+    <a href="./historial.php" class="right-link">Historial</a>
+    <a href="./recursos.php" class="right-link">Recursos</a>
+    <a href="./usuarios.php" class="right-link">Usuarios</a>
+    <div class="user-info">
         <div class="dropdown">
             <i class="fas fa-caret-down" style="font-size: 16px; margin-right: 10px;"></i>
             <div class="dropdown-content">
@@ -30,6 +33,9 @@ if (!isset($_SESSION['loggedin'])) {
             </div>
         </div>
         <span><?php echo $_SESSION['nombre_usuario']; ?></span>
+    </div>
+    <div class="hamburger" id="hamburger-icon">
+        &#9776;
     </div>
 </div>
     <div class="container">

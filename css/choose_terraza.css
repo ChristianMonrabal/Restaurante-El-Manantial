@@ -120,6 +120,7 @@ body {
     background-color: #b97f52;
 }
 
+/* Imagen de fondo según la terraza */
 .option.terraza1 {
     background-image: url('../img/salas/terraza1.jpeg');
 }

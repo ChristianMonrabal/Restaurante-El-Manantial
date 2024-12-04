@@ -10,7 +10,7 @@ body {
     color: #fff;
     padding: 8px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Para que los elementos se distribuyan entre el logo y la parte derecha */
     align-items: center;
 }
 
@@ -22,6 +22,9 @@ body {
 .navbar .user-info {
     display: flex;
     align-items: center;
+    justify-content: flex-end; /* Esto alinea el contenido de la derecha */
+    margin-left: auto; /* Asegura que la parte derecha se coloque en el extremo */
+    margin-right: 20px; /* Espacio a la derecha */
 }
 
 .navbar .user-info span {
@@ -44,10 +47,19 @@ body {
 }
 
 .right-link {
-    margin-left: auto;
     text-decoration: none;
     color: white;
     font-size: 16px;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border: 2px solid white;
+    border-radius: 15px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.right-link:hover {
+    background-color: #d4a373;
+    color: #fff;
 }
 
 .dropdown {
@@ -84,6 +96,10 @@ body {
     background-color: #f1f1f1;
 }
 
+.hamburger {
+    display: none;
+}
+
 .options {
     display: flex;
     justify-content: space-between;
@@ -104,17 +120,20 @@ body {
     border-radius: 10px;
     border: 1px solid #d4a373;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    text-decoration: none;
 }
 
 .option h2 {
     margin: 0;
     padding: 10px;
-    }
+}
 
-.button-container {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
+.option a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
 }
 
 .option .select-button {

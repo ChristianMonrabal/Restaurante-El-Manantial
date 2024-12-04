@@ -23,6 +23,11 @@ if (!isset($_SESSION['loggedin'])) {
         <img src="../img/icon.png" class="icon">
     </a>
     <a href="./historial.php" class="right-link">Historial</a>
+    <?php if ($_SESSION['tipo_usuario'] === 'administrador'): ?>
+        <a href="./recursos.php" class="right-link">Recursos</a>
+        <a href="./usuarios.php" class="right-link">Usuarios</a>
+    <?php endif; ?>
+
     <div class="user-info">
         <div class="dropdown">
             <i class="fas fa-caret-down" style="font-size: 16px; margin-right: 10px;"></i>
@@ -43,24 +48,15 @@ if (!isset($_SESSION['loggedin'])) {
 </div>
 
 <div class="options">
-    <div class="option terraza">
+    <a href="./choose_terraza.php" class="option terraza">
         <h2>Terraza</h2>
-        <div class="button-container">
-            <a href="./choose_terraza.php" class="select-button">Seleccionar</a>
-        </div>
-    </div>
-    <div class="option comedor">
+    </a>
+    <a href="./choose_comedor.php" class="option comedor">
         <h2>Comedor</h2>
-        <div class="button-container">
-            <a href="./choose_comedor.php" class="select-button">Seleccionar</a>
-        </div>
-    </div>g
-    <div class="option privadas">
+    </a>
+    <a href="./choose_privada.php" class="option privadas">
         <h2>Sala privada</h2>
-        <div class="button-container">
-            <a href="./choose_privada.php" class="select-button">Seleccionar</a>
-        </div>
-    </div>
+    </a>
 </div>
 
 <script src="../js/dashboard.js"></script>

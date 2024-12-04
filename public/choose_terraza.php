@@ -5,11 +5,18 @@ if (!isset($_SESSION['loggedin'])) {
     header("Location: ../index.php");
     exit();
 }
+
+include "../db/conexion.php";
+
+// Obtener las terrazas desde la base de datos
+$sql = "SELECT * FROM tbl_sala WHERE tipo_sala = 'terraza'";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$terrazas = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +25,6 @@ if (!isset($_SESSION['loggedin'])) {
     <link rel="stylesheet" href="../css/choose_terraza.css">
     <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
 </head>
-
 <body>
     <div class="navbar">
         <a href="../index.php">
@@ -34,30 +40,19 @@ if (!isset($_SESSION['loggedin'])) {
             <span><?php echo $_SESSION['nombre_usuario']; ?></span>
         </div>
     </div>
-</div>
 
-<form action="gestion_mesas.php" method="post" class="options">
-    <div class="option terraza1">
-        <h2>Terraza principal</h2>
-        <div class="button-container">
-            <button type="submit" name="sala" value="terraza_principal" class="select-button">Seleccionar</button>
-        </div>
-    </div>
-    <div class="option terraza2">
-        <h2>Terraza secundaria</h2>
-        <div class="button-container">
-            <button type="submit" name="sala" value="terraza_secundaria" class="select-button">Seleccionar</button>
-        </div>
-    </div>
-    <div class="option terraza3">
-        <h2>Terraza terciaria</h2>
-        <div class="button-container">
-            <button type="submit" name="sala" value="terraza_terciaria" class="select-button">Seleccionar</button>
-        </div>
-    </div>
-</form>
+    <form action="gestion_mesas.php" method="post" class="options">
+        <?php foreach ($terrazas as $index => $terraza): ?>
+            <div class="option terraza<?php echo $index + 1; ?>">
+                <h2><?php echo $terraza['nombre_sala']; ?></h2>
+                <div class="button-container">
+                    <input type="hidden" name="sala" value="<?php echo $terraza['nombre_sala']; ?>" />
+                    <input type="submit" class="select-button" value="Seleccionar" />
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </form>
 
-<script src="../js/dashboard.js"></script>
+    <script src="../js/dashboard.js"></script>
 </body>
-
 </html>

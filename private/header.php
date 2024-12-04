@@ -9,5 +9,6 @@
 <body>
     
 <script src="../js/sweet_alert.js"></script>
+<script src="../js/sweet_alert_crud.js"></script>
 </body>
 </html>

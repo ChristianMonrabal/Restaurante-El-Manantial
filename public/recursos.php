@@ -6,30 +6,31 @@ if (!isset($_SESSION['loggedin'])) {
     exit();
 }
 
-include "../db/conexion.php";
-
-$sql = "SELECT * FROM tbl_sala WHERE tipo_sala = 'privada'";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$salas_privadas = $stmt->fetchAll();
+if ($_SESSION['tipo_usuario'] !== 'administrador') {
+    header("Location: ../index.php");
+    exit();
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seleccionar sala privada</title>
+    <title>Seleccionar sala</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../css/choose_privada.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
 </head>
-
 <body>
 <div class="navbar">
     <a href="../index.php">
         <img src="../img/icon.png" class="icon">
     </a>
+    <a href="./historial.php" class="right-link">Historial</a>
+    <a href="./recursos.php" class="right-link">Recursos</a>
+    <a href="./usuarios.php" class="right-link">Usuarios</a>
     <div class="user-info">
         <div class="dropdown">
             <i class="fas fa-caret-down" style="font-size: 16px; margin-right: 10px;"></i>
@@ -39,20 +40,12 @@ $salas_privadas = $stmt->fetchAll();
         </div>
         <span><?php echo $_SESSION['nombre_usuario']; ?></span>
     </div>
+    <div class="hamburger" id="hamburger-icon">
+        &#9776;
+    </div>
 </div>
-
-<form action="gestion_mesas.php" method="post" class="options">
-    <?php foreach ($salas_privadas as $index => $sala): ?>
-        <div class="option privada<?php echo $index + 1; ?>">
-            <h2><?php echo $sala['nombre_sala']; ?></h2>
-            <div class="button-container">
-                <input type="hidden" name="sala" value="<?php echo $sala['nombre_sala']; ?>" />
-                <input type="submit" class="select-button" value="Seleccionar" />
-            </div>
-        </div>
-    <?php endforeach; ?>
-</form>
-
-<script src="../js/dashboard.js"></script>
-</body>
-</html>
+<div class="mobile-nav" id="mobile-nav">
+    <a href="./historial.php">Historial</a>
+    <a href="#"><?php echo $_SESSION['nombre_usuario']; ?></a>
+    <a href="../private/logout.php">Cerrar Sesión</a>
+</div>

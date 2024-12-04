@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     try {
-        $sql = "SELECT * FROM tbl_usuario WHERE nombre_usuario = :nombre_usuario";
+        $sql = "SELECT id_usuario, nombre_usuario, password_usuario, tipo_usuario FROM tbl_usuario WHERE nombre_usuario = :nombre_usuario";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':nombre_usuario', $nombre_usuario, PDO::PARAM_STR);
         $stmt->execute();
@@ -27,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['loggedin'] = true;
             $_SESSION['usuario_id'] = $usuario['id_usuario'];
             $_SESSION['nombre_usuario'] = $usuario['nombre_usuario'];
+            $_SESSION['tipo_usuario'] = $usuario['tipo_usuario'];
 
             unset($_SESSION['pwd']);
             unset($_SESSION['error']);
@@ -47,4 +48,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: ../public/login.php");
     exit();
 }
-?>

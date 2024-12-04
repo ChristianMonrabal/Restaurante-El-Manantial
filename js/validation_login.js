@@ -11,10 +11,6 @@ function validaUsuario() {
         errorUsuario.textContent = "El nombre de usuario es obligatorio.";
         inputUsuario.classList.add("error-border");
         return false;
-    } else if (nombre_usuario.length < 4) {
-        errorUsuario.textContent = "El nombre de usuario debe tener al menos 4 caracteres.";
-        inputUsuario.classList.add("error-border");
-        return false;
     } else {
         errorUsuario.textContent = "";
         inputUsuario.classList.remove("error-border");
@@ -29,14 +25,6 @@ function validaPassword() {
 
     if (pwd === "" || pwd === null) {
         errorPwd.textContent = "La contraseña es obligatoria.";
-        inputPwd.classList.add("error-border");
-        return false;
-    } else if (pwd.length < 8) {
-        errorPwd.textContent = "La contraseña debe tener al menos 8 caracteres.";
-        inputPwd.classList.add("error-border");
-        return false;
-    } else if (!pwd.match(/[A-Z]/) || !pwd.match(/[a-z]/) || !pwd.match(/[0-9]/)) {
-        errorPwd.textContent = "La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número.";
         inputPwd.classList.add("error-border");
         return false;
     } else {

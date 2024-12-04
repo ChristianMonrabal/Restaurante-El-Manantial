@@ -1,12 +1,23 @@
-function showSweetAlert(icon, title, text) {
+// Función para mostrar SweetAlert de éxito
+function showSuccessAlert(title, text, redirectUrl) {
     Swal.fire({
-        icon: icon,
+        icon: 'success',
         title: title,
         text: text,
-        confirmButtonText: 'Volver al inicio'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = '../public/dashboard.php';
+    }).then(() => {
+        if (redirectUrl) {
+            window.location.href = redirectUrl;
         }
+    });
+}
+
+// Función para mostrar SweetAlert de error
+function showErrorAlert(title, text) {
+    Swal.fire({
+        icon: 'error',
+        title: title,
+        text: text,
+    }).then(() => {
+        window.history.back();
     });
 }
