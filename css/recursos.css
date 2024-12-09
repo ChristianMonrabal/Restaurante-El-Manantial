@@ -1,0 +1,45 @@
+.table {
+    table-layout: fixed;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.table th, .table td {
+    text-align: center;
+}
+
+.table th:nth-child(1), .table td:nth-child(1) {
+    width: 12%;
+}
+
+.table th:nth-child(2), .table td:nth-child(2) {
+    width: 12%;
+}
+
+.table th:nth-child(3), .table td:nth-child(3) {
+    width: 12%;
+}
+
+.table th:nth-child(4), .table td:nth-child(4) {
+    width: 12%;
+}
+
+.table th:nth-child(5), .table td:nth-child(5) {
+    width: 20%;
+}
+
+.navbar .user-info .add-mesa-button {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border: 2px solid white;
+    border-radius: 15px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar .user-info .add-mesa-button:hover {
+    background-color: #d4a373;
+    color: #fff;
+}

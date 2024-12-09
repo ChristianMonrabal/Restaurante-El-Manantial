@@ -20,8 +20,26 @@ include "../private/update_usuario.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Usuario</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/usuarios.css">
 </head>
 <body>
+<div class="navbar">
+    <a href="../index.php">
+        <img src="../img/icon.png" class="icon">
+    </a>
+    <a href="./historial.php" class="right-link">Historial</a>
+    <a href="./recursos.php" class="right-link">Recursos</a>
+    <a href="./usuarios.php" class="right-link">Usuarios</a>
+    <div class="user-info">
+        <div class="dropdown">
+            <i class="fas fa-caret-down" style="font-size: 16px; margin-right: 10px;"></i>
+            <div class="dropdown-content">
+                <a href="../private/logout.php">Cerrar Sesión</a>
+            </div>
+        </div>
+        <span><?php echo $_SESSION['nombre_usuario']; ?></span>
+    </div>
+</div>
 <div class="container mt-5">
     <h2>Editar Usuario</h2>
     <form method="POST" action="">

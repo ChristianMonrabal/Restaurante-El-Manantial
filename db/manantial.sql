@@ -52,14 +52,6 @@ CREATE TABLE tbl_ocupacion (
     FOREIGN KEY (id_usuario) REFERENCES tbl_usuario(id_usuario)
 );
 
--- Tabla de recursos adicionales
-CREATE TABLE tbl_recurso (
-    id_recurso INT AUTO_INCREMENT PRIMARY KEY,
-    tipo_recurso ENUM('mesa', 'silla', 'otro') NOT NULL,
-    descripcion_recurso VARCHAR(100) NOT NULL
-);
-
-
 INSERT INTO tbl_sala (id_sala, nombre_sala, tipo_sala, capacidad_total) VALUES
 (1, 'terraza_principal', 'terraza', 14),
 (2, 'terraza_secundaria', 'terraza', 14),

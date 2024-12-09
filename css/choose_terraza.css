@@ -66,15 +66,16 @@ body {
 
 .options {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap; /* Asegura que los elementos se acomoden en varias filas */
+    justify-content: flex-start; /* Alinea los elementos hacia el inicio */
     margin: 20px auto;
     width: 80%;
     height: 75%;
 }
 
 .option {
-    flex: 1;
-    margin: 0 10px;
+    flex: 1 1 calc(25% - 20px); /* Hace que cada opción ocupe un 25% del ancho menos el margen */
+    margin: 10px;
     padding: 20px;
     text-align: center;
     border: 1px solid #ccc;
@@ -85,9 +86,6 @@ body {
     flex-direction: column;
     justify-content: center;
     height: 100%;
-    border: none;
-    border-radius: 10px;
-    border: 1px solid #d4a373;
     border-radius: 10px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }

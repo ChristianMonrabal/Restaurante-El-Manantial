@@ -11,10 +11,8 @@ if ($_SESSION['tipo_usuario'] !== 'administrador') {
     exit();
 }
 
-// Conexión a la base de datos
 include_once '../db/conexion.php';
 
-// Obtener usuarios
 $query = "SELECT * FROM tbl_usuario";
 $stmt = $conn->prepare($query);
 $stmt->execute();
@@ -41,6 +39,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <a href="./recursos.php" class="right-link">Recursos</a>
     <a href="./usuarios.php" class="right-link">Usuarios</a>
     <div class="user-info">
+        <a href="add_usuario.php" class="add-user-button">Agregar Usuario</a>
         <div class="dropdown">
             <i class="fas fa-caret-down" style="font-size: 16px; margin-right: 10px;"></i>
             <div class="dropdown-content">
@@ -53,6 +52,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         &#9776;
     </div>
 </div>
+
 <div class="mobile-nav" id="mobile-nav">
     <a href="./historial.php">Historial</a>
     <a href="#"><?php echo $_SESSION['nombre_usuario']; ?></a>
@@ -60,7 +60,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <div class="container mt-5">
-    <a href="add_usuario.php" class="btn btn-primary mb-3">Agregar Usuario</a>
     <?php
         if (isset($_GET['error'])) {
             echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error']) . '</div>';

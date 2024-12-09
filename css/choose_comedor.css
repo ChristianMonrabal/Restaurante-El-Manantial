@@ -70,6 +70,7 @@ body {
     margin: 20px auto;
     width: 80%;
     height: 75%;
+    flex-wrap: wrap;  /* Añadido para permitir que las opciones se ajusten debajo si hay más de 4 */
 }
 
 .option {

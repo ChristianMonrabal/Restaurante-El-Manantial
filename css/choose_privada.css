@@ -66,6 +66,7 @@ body {
 
 .options {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin: 20px auto;
     width: 80%;
@@ -73,8 +74,8 @@ body {
 }
 
 .option {
-    flex: 1;
-    margin: 0 10px;
+    flex: 1 1 calc(25% - 20px);
+    margin: 10px;
     padding: 20px;
     text-align: center;
     border: 1px solid #ccc;
@@ -88,7 +89,6 @@ body {
     border: none;
     border-radius: 10px;
     border: 1px solid #d4a373;
-    border-radius: 10px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 

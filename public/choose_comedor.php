@@ -1,18 +1,21 @@
 <?php
 session_start();
+include_once '../db/conexion.php';
 
 if (!isset($_SESSION['loggedin'])) {
     header("Location: ../index.php");
     exit();
 }
 
-include "../db/conexion.php";
-
-// Obtener los comedores desde la base de datos
-$sql = "SELECT * FROM tbl_sala WHERE tipo_sala = 'comedor'";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$comedores = $stmt->fetchAll();
+$salasComedor = [];
+try {
+    $query = "SELECT * FROM tbl_sala WHERE tipo_sala = 'comedor'";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $salasComedor = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error al obtener las salas de comedor: " . $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +31,7 @@ $comedores = $stmt->fetchAll();
 <body>
     <div class="navbar">
         <a href="../index.php">
-            <img src="../img/icon.png" class="icon">
+            <img src="../img/icon.png" class="icon" alt="Icono">
         </a>
         <div class="user-info">
             <div class="dropdown">
@@ -42,12 +45,11 @@ $comedores = $stmt->fetchAll();
     </div>
 
     <form action="gestion_mesas.php" method="post" class="options">
-        <?php foreach ($comedores as $index => $comedor): ?>
+        <?php foreach ($salasComedor as $index => $sala): ?>
             <div class="option comedor<?php echo $index + 1; ?>">
-                <h2><?php echo $comedor['nombre_sala']; ?></h2>
+                <h2><?php echo htmlspecialchars($sala['nombre_sala']); ?></h2>
                 <div class="button-container">
-                    <input type="hidden" name="sala" value="<?php echo $comedor['nombre_sala']; ?>" />
-                    <input type="submit" class="select-button" value="Seleccionar" />
+                    <button type="submit" name="sala" value="<?php echo htmlspecialchars($sala['nombre_sala']); ?>" class="select-button">Seleccionar</button>
                 </div>
             </div>
         <?php endforeach; ?>
