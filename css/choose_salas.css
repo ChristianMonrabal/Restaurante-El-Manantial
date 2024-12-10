@@ -64,18 +64,19 @@ body {
     background-color: #f1f1f1;
 }
 
+/* Uso de grid para las opciones */
 .options {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20%, 1fr)); /* Auto ajusta el número de columnas */
+    gap: 20px; /* Espacio entre las opciones */
     margin: 20px auto;
     width: 80%;
-    height: 75%;
+    max-width: 1200px; /* Puedes ajustar el ancho máximo */
+    height: auto;
 }
 
+/* Mantener la misma altura de las opciones */
 .option {
-    flex: 1 1 calc(25% - 20px);
-    margin: 10px;
     padding: 20px;
     text-align: center;
     border: 1px solid #ccc;
@@ -85,8 +86,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100%;
-    border: none;
+    min-height: 200px; /* Mantener altura fija */
     border-radius: 10px;
     border: 1px solid #d4a373;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -96,6 +96,7 @@ body {
     margin: 0;
     padding: 10px;
     text-decoration: none;
+    color: black;
 }
 
 .button-container {
@@ -116,22 +117,17 @@ body {
     transition: background-color 0.3s;
 }
 
-.option.privada1 {
-    background-image: url('../img/salas/privada1.jpeg');
+.option .select-button:hover {
+    background-color: #b97f52;
 }
 
-.option.privada2 {
-    background-image: url('../img/salas/privada2.jpeg');
+.sala-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
-
-.option.privada3 {
-    background-image: url('../img/salas/privada3.jpeg');
-}
-
-.option.privada4 {
-    background-image: url('../img/salas/privada4.jpeg');
-}
-
 
 .extra-buttons {
     display: none;

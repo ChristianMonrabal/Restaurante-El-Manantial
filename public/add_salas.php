@@ -52,7 +52,7 @@ if (isset($_SESSION['message'])) {
 
 <div class="container mt-5">
     <h3 class="mt-5">Agregar Nueva Sala</h3>
-    <form action="../private/insert_salas.php" method="POST">
+    <form action="../private/insert_salas.php" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="tipo_sala">Tipo de Sala</label>
             <select class="form-control <?php echo isset($errors['tipo_sala']) ? 'is-invalid' : ''; ?>" id="tipo_sala" name="tipo_sala">
@@ -80,8 +80,8 @@ if (isset($_SESSION['message'])) {
             <?php endif; ?>
         </div>
         <div class="form-group">
-            <label for="imagen_sala">Imagen de la Sala (URL)</label>
-            <input type="file" class="form-control <?php echo isset($errors['imagen_sala']) ? 'is-invalid' : ''; ?>" id="imagen_sala" name="imagen_sala" placeholder="URL de la imagen" value="<?php echo isset($_POST['imagen_sala']) ? $_POST['imagen_sala'] : ''; ?>">
+            <label for="imagen_sala">Imagen de la Sala</label>
+            <input type="file" class="form-control <?php echo isset($errors['imagen_sala']) ? 'is-invalid' : ''; ?>" id="imagen_sala" name="imagen_sala">
             <?php if (isset($errors['imagen_sala'])): ?>
                 <small class="text-danger"><?php echo $errors['imagen_sala']; ?></small>
             <?php endif; ?>
@@ -89,11 +89,10 @@ if (isset($_SESSION['message'])) {
         <button type="submit" class="btn btn-success" name="create_sala">Crear Sala</button>
     </form>
 
-    <?php if (isset($message)): ?>
+    <?php if ($message): ?>
         <div class="alert alert-success mt-3"><?php echo $message; ?></div>
     <?php endif; ?>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>

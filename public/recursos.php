@@ -80,7 +80,6 @@ $salas = listarSalas($conn);
     <table class="table table-bordered table-striped" style="table-layout: fixed; width: 80%; margin: 0 auto;">
         <thead class="table-dark">
         <tr>
-            <th>ID Sala</th>
             <th>Nombre de Sala</th>
             <th>Acciones</th>
         </tr>
@@ -88,7 +87,6 @@ $salas = listarSalas($conn);
         <tbody>
         <?php foreach ($salas as $sala): ?>
             <tr>
-                <td><?php echo $sala['id_sala']; ?></td>
                 <td><?php echo $sala['nombre_sala']; ?></td>
                 <td>
                     <a href="./edit_salas.php?id=<?php echo $sala['id_sala']; ?>" class="btn btn-warning btn-sm">Editar</a>

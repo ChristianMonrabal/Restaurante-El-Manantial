@@ -76,7 +76,7 @@ if (isset($_SESSION['message'])) {
 
 <div class="container mt-5">
     <h3 class="mt-5">Editar Sala</h3>
-    <form action="../private/update_salas.php" method="POST">
+    <form action="../private/update_salas.php" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id_sala" value="<?php echo htmlspecialchars($sala['id_sala']); ?>">
 
         <div class="form-group">
@@ -102,8 +102,9 @@ if (isset($_SESSION['message'])) {
         </div>
 
         <div class="form-group">
-            <label for="imagen_sala">Imagen de la Sala (URL)</label>
-            <input type="text" class="form-control" id="imagen_sala" name="imagen_sala" value="<?php echo isset($form_data['imagen_sala']) ? htmlspecialchars($form_data['imagen_sala']) : htmlspecialchars($sala['imagen_sala'] ?? ''); ?>" >
+                <label>Ruta de la imagen actual: </label>
+                <input type="text" class="form-control" value="../img/salas/<?php echo htmlspecialchars($sala['imagen_sala']); ?>" readonly>
+            <input type="file" class="form-control" id="imagen_sala" name="imagen_sala">
         </div>
 
         <?php if ($message): ?>
@@ -113,7 +114,7 @@ if (isset($_SESSION['message'])) {
         <?php endif; ?>
 
         <?php if ($errors): ?>
-            <div class="error">
+            <div class="alert alert-danger">
                 <ul>
                     <?php foreach ($errors as $error): ?>
                         <li><?php echo $error; ?></li>
@@ -126,6 +127,7 @@ if (isset($_SESSION['message'])) {
         <a href="./recursos.php" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>

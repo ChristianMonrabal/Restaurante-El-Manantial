@@ -52,65 +52,6 @@ CREATE TABLE tbl_ocupacion (
     FOREIGN KEY (id_usuario) REFERENCES tbl_usuario(id_usuario)
 );
 
-INSERT INTO tbl_sala (id_sala, nombre_sala, tipo_sala, capacidad_total) VALUES
-(1, 'terraza_principal', 'terraza', 14),
-(2, 'terraza_secundaria', 'terraza', 14),
-(3, 'terraza_terciaria', 'terraza', 14),
-(4, 'comedor_interior', 'comedor', 29),
-(5, 'comedor_exterior', 'comedor', 24),
-(6, 'sala_privada_1', 'privada', 10),
-(7, 'sala_privada_2', 'privada', 10),
-(8, 'sala_privada_3', 'privada', 10),
-(9, 'sala_privada_4', 'privada', 10);
-
-INSERT INTO tbl_mesa (id_sala, num_sillas_mesa, estado_mesa) VALUES
--- Terraza Principal
-(1, 2, 'libre'),
-(1, 3, 'libre'),
-(1, 4, 'libre'),
-(1, 5, 'libre'),
-
--- Terraza Secundaria
-(2, 2, 'libre'),
-(2, 3, 'libre'),
-(2, 4, 'libre'),
-(2, 5, 'libre'),
-
--- Terraza Terciaria
-(3, 2, 'libre'),
-(3, 3, 'libre'),
-(3, 4, 'libre'),
-(3, 5, 'libre'),
-
--- Comedor Interior
-(4, 4, 'libre'),
-(4, 5, 'libre'),
-(4, 2, 'libre'),
-(4, 4, 'libre'),
-(4, 3, 'libre'),
-(4, 5, 'libre'),
-(4, 6, 'libre'),
-
--- Comedor Exterior
-(5, 4, 'libre'),
-(5, 5, 'libre'),
-(5, 3, 'libre'),
-(5, 6, 'libre'),
-(5, 4, 'libre'),
-(5, 2, 'libre'),
-
--- Sala Privada 1
-(6, 10, 'libre'),
-
--- Sala Privada 2
-(7, 10, 'libre'),
-
--- Sala Privada 3
-(8, 10, 'libre'),
-
--- Sala Privada 4
-(9, 10, 'libre');
-
 INSERT INTO tbl_usuario (nombre_usuario, tipo_usuario, email_usuario, password_usuario) VALUES
 ('christian.monrabal', 'camarero', 'christian.monrabal@elmanantial.com', '$2a$12$NtbM8IYMhhkOlUl9uZ7XMenWrzmSEp6DcFfQijiMs/cmjwN2MP2bi'),
 ('anuel.aa', 'camarero', 'anuel.aa@elmanantial.com', '$2a$12$NtbM8IYMhhkOlUl9uZ7XMenWrzmSEp6DcFfQijiMs/cmjwN2MP2bi'),

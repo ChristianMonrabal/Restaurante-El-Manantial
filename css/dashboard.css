@@ -153,19 +153,19 @@ body {
 }
 
 .option.terraza {
-    background-image: url('../img/salas/terraza4.jpeg');
+    background-image: url('../img/salas_predefinidas/terraza4.jpeg');
     background-size: cover;
     background-position: center;
 }
 
 .option.comedor {
-    background-image: url('../img/salas/comedor.jpeg');
+    background-image: url('../img/salas_predefinidas/comedor.jpeg');
     background-size: cover;
     background-position: center;
 }
 
 .option.privadas {
-    background-image: url('../img/salas/privada.jpg');
+    background-image: url('../img/salas_predefinidas/privada.jpg');
     background-size: cover;
     background-position: center;
 }

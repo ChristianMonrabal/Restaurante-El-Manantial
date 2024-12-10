@@ -25,7 +25,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seleccionar terraza</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../css/choose_terraza.css">
+    <link rel="stylesheet" href="../css/choose_salas.css">
     <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
 </head>
 <body>
@@ -45,15 +45,20 @@ try {
     </div>
 
     <form action="gestion_mesas.php" method="post" class="options">
-        <?php foreach ($salasTerraza as $index => $sala): ?>
-            <div class="option terraza<?php echo $index + 1; ?>">
-                <h2><?php echo htmlspecialchars($sala['nombre_sala']); ?></h2>
-                <div class="button-container">
-                    <button type="submit" name="sala" value="<?php echo htmlspecialchars($sala['nombre_sala']); ?>" class="select-button">Seleccionar</button>
-                </div>
+    <?php foreach ($salasTerraza as $index => $sala): ?>
+        <div class="option terraza<?php echo $index + 1; ?>">
+            <h2><?php echo htmlspecialchars($sala['nombre_sala']); ?></h2>
+            <?php 
+            $imagen_sala = $sala['imagen_sala'] ?: 'default.jpg';
+            ?>
+            <img src="../img/salas/<?php echo htmlspecialchars($imagen_sala); ?>" alt="<?php echo htmlspecialchars($sala['nombre_sala']); ?>" class="sala-img">
+            <div class="button-container">
+                <button type="submit" name="sala" value="<?php echo htmlspecialchars($sala['nombre_sala']); ?>" class="select-button">Seleccionar</button>
             </div>
-        <?php endforeach; ?>
-    </form>
+        </div>
+    <?php endforeach; ?>
+</form>
+
 
     <script src="../js/dashboard.js"></script>
 </body>
