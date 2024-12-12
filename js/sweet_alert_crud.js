@@ -30,6 +30,24 @@ function confirmarEliminar(id) {
     });
 }
 
+function confirmarEliminarUsuario(id) {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "No podrás revertir esta acción",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = `../private/delete_usuario.php?id=${id}`;
+        } else {
+            window.location.href = `../public/usuarios.php`;        }
+    });
+}
+
 // Función para mostrar SweetAlert de éxito y volver a la página anterior
 function showSuccessAlert(title, text) {
     Swal.fire({

@@ -36,16 +36,16 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <img src="../img/icon.png" class="icon">
     </a>
     <a href="./historial.php" class="right-link">Historial</a>
-    <a href="./recursos.php" class="right-link">Recursos</a>
-    <a href="./usuarios.php" class="right-link">Usuarios</a>
+    <a href="./reservas.php" class="right-link">Reservas</a>
+    <?php if ($_SESSION['tipo_usuario'] === 'administrador'): ?>
+        <a href="./recursos.php" class="right-link">Recursos</a>
+        <a href="./usuarios.php" class="right-link">Usuarios</a>
+    <?php endif; ?>
     <div class="user-info">
-        <a href="add_usuario.php" class="add-user-button">Agregar Usuario</a>
-        <div class="dropdown">
-            <i class="fas fa-caret-down" style="font-size: 16px; margin-right: 10px;"></i>
-            <div class="dropdown-content">
-                <a href="../private/logout.php">Cerrar Sesión</a>
-            </div>
-        </div>
+        <a href="add_usuario.php" class="add-user-button">Agregar usuario</a>
+        <a href="../private/logout.php" class="logout-icon">
+            <i class="fas fa-sign-out-alt" style="font-size: 20px; color: #000; margin-right: 10px;"></i>
+        </a>
         <span><?php echo $_SESSION['nombre_usuario']; ?></span>
     </div>
     <div class="hamburger" id="hamburger-icon">
@@ -83,7 +83,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?php echo ucfirst($usuario['tipo_usuario']); ?></td>
                 <td>
                 <a href="update_usuario.php?id=<?php echo $usuario['id_usuario']; ?>" class="btn btn-warning btn-sm">Editar</a>
-                <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(<?php echo $usuario['id_usuario']; ?>)">Eliminar</button>
+                <button class="btn btn-danger btn-sm" onclick="confirmarEliminarUsuario(<?php echo $usuario['id_usuario']; ?>)">Eliminar</button>
                 </td>
             </tr>
             <?php endforeach; ?>

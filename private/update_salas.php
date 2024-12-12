@@ -8,20 +8,18 @@ if (!isset($_SESSION['loggedin'])) {
 
 include_once '../db/conexion.php';
 
-// Verificamos que el id_sala haya sido enviado
 if (isset($_POST['id_sala'])) {
     $id_sala = $_POST['id_sala'];
 
-    // Obtener los datos actuales de la sala
     $query = "SELECT * FROM tbl_sala WHERE id_sala = :id_sala";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(':id_sala', $id_sala);
     $stmt->execute();
-    $sala = $stmt->fetch(PDO::FETCH_ASSOC); // Obtenemos los datos actuales de la sala
+    $sala = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$sala) {
         $_SESSION['errors'] = ["Sala no encontrada."];
-        header("Location: ../public/recursos.php");  // Redirigir si no se encuentra la sala
+        header("Location: ../public/recursos.php");
         exit();
     }
 
@@ -32,7 +30,6 @@ if (isset($_POST['id_sala'])) {
 
     $errors = [];
 
-    // Validación básica
     if (empty($nombre_sala)) {
         $errors[] = "El nombre de la sala es obligatorio.";
     }
@@ -43,8 +40,7 @@ if (isset($_POST['id_sala'])) {
         $errors[] = "La capacidad total debe ser un número entero positivo.";
     }
 
-    // Lógica para manejar la imagen
-    $image_name = $sala['imagen_sala']; // Si no se sube una nueva imagen, mantenemos la actual
+    $image_name = $sala['imagen_sala'];
     if ($imagen_sala['error'] === UPLOAD_ERR_OK) {
         $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
         $file_extension = strtolower(pathinfo($imagen_sala['name'], PATHINFO_EXTENSION));
@@ -57,10 +53,9 @@ if (isset($_POST['id_sala'])) {
             $image_name = uniqid('sala_') . '.' . $file_extension;
             $image_path = "../img/salas/" . $image_name;
 
-            // Eliminar la imagen anterior si existe
             $current_image_path = "../img/salas/" . $sala['imagen_sala'];
             if (file_exists($current_image_path) && $sala['imagen_sala'] != null) {
-                unlink($current_image_path);  // Eliminar la imagen vieja
+                unlink($current_image_path);
             }
 
             if (!move_uploaded_file($imagen_sala['tmp_name'], $image_path)) {
@@ -70,7 +65,6 @@ if (isset($_POST['id_sala'])) {
     }
 
     if (empty($errors)) {
-        // Preparar la consulta para actualizar los datos de la sala
         $update_query = "UPDATE tbl_sala SET nombre_sala = :nombre_sala, tipo_sala = :tipo_sala, capacidad_total = :capacidad_total, imagen_sala = :imagen_sala WHERE id_sala = :id_sala";
         $stmt = $conn->prepare($update_query);
         $stmt->bindParam(':nombre_sala', $nombre_sala);
@@ -81,7 +75,7 @@ if (isset($_POST['id_sala'])) {
 
         if ($stmt->execute()) {
             $_SESSION['message'] = "Sala actualizada correctamente.";
-            header("Location: ../public/recursos.php");  // Redirigir a la lista de recursos
+            header("Location: ../public/recursos.php");
             exit();
         } else {
             $errors[] = "Error al actualizar la sala en la base de datos.";
@@ -90,7 +84,7 @@ if (isset($_POST['id_sala'])) {
 
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
-        header("Location: ../public/edit_salas.php?id_sala=" . $id_sala);  // Volver a la página de edición con los errores
+        header("Location: ../public/edit_salas.php?id_sala=" . $id_sala);
         exit();
     }
 }

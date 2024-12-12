@@ -6,6 +6,13 @@ if (!isset($_SESSION['loggedin'])) {
     header("Location: ../index.php");
     exit();
 }
+
+if (isset($_SESSION['usuario_id'])) {
+    $usuario_id = $_SESSION['usuario_id'];
+} else {
+    header("Location: ../index.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,21 +30,22 @@ if (!isset($_SESSION['loggedin'])) {
         <img src="../img/icon.png" class="icon">
     </a>
     <a href="./historial.php" class="right-link">Historial</a>
-    <a href="./recursos.php" class="right-link">Recursos</a>
-    <a href="./usuarios.php" class="right-link">Usuarios</a>
+    <a href="./reservas.php" class="right-link">Reservas</a>
+    <?php if ($_SESSION['tipo_usuario'] === 'administrador'): ?>
+        <a href="./recursos.php" class="right-link">Recursos</a>
+        <a href="./usuarios.php" class="right-link">Usuarios</a>
+    <?php endif; ?>
     <div class="user-info">
-        <div class="dropdown">
-            <i class="fas fa-caret-down" style="font-size: 16px; margin-right: 10px;"></i>
-            <div class="dropdown-content">
-                <a href="../private/logout.php">Cerrar Sesión</a>
-            </div>
-        </div>
+        <a href="../private/logout.php" class="logout-icon">
+            <i class="fas fa-sign-out-alt" style="font-size: 20px; color: #000; margin-right: 10px;"></i>
+        </a>
         <span><?php echo $_SESSION['nombre_usuario']; ?></span>
     </div>
     <div class="hamburger" id="hamburger-icon">
         &#9776;
     </div>
 </div>
+
     <div class="container">
         <h1>Historial de Ocupaciones</h1>
         <form method="GET" id="filterForm">
@@ -57,7 +65,6 @@ if (!isset($_SESSION['loggedin'])) {
             <select name="sala" id="sala">
                 <option value="">Seleccionar Sala</option>
                 <?php
-                // Consultar las salas desde la base de datos
                 $querySalas = "SELECT id_sala, nombre_sala FROM tbl_sala";
                 try {
                     $stmtSalas = $conn->prepare($querySalas);

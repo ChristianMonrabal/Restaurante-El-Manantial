@@ -66,7 +66,7 @@ include_once '../private/gestion_salas.php';
                                 $imgSrc = isset($imagenesSillas[$numSillas]) ? $imagenesSillas[$numSillas] : ""; 
                             ?>
                             <?php if ($imgSrc): ?>
-                                <img src="<?php echo $imgSrc; ?>" alt="Imagen de la mesa" class="mesa-img">
+                                <img src="<?php echo $imgSrc; ?>" class="mesa-img">
                             <?php endif; ?>
                         </label>
                         <?php if ($mesa['estado_mesa'] == 'ocupada'): ?>

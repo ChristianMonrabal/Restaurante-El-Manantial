@@ -42,11 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tipo_usuario = $_POST['tipo_usuario'];
     $password_usuario = !empty($_POST['password_usuario']) ? password_hash($_POST['password_usuario'], PASSWORD_BCRYPT) : $usuario['password_usuario'];
 
-    // Validaciones PHP
     if (empty($nombre_usuario)) {
-        $errors['nombre_usuario'] = "El nombre de usuario no puede estar vacío.";
+        $errors['nombre_usuario'] = "El usuario no puede estar vacío.";
     } else {
-        // Verificar que el nombre de usuario no esté siendo usado por otro usuario
         $checkNombreUsuarioQuery = "SELECT * FROM tbl_usuario WHERE nombre_usuario = :nombre AND id_usuario != :id";
         $stmt = $conn->prepare($checkNombreUsuarioQuery);
         $stmt->bindParam(':nombre', $nombre_usuario);
@@ -62,7 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!filter_var($email_usuario, FILTER_VALIDATE_EMAIL) || !preg_match('/@elmanantial\.com$/', $email_usuario)) {
         $errors['email_usuario'] = "El correo electrónico debe ser válido y tener el dominio @elmanantial.com.";
     } else {
-        // Verificar que el correo electrónico no sea de otro usuario
         $checkEmailQuery = "SELECT * FROM tbl_usuario WHERE email_usuario = :email AND id_usuario != :id";
         $stmt = $conn->prepare($checkEmailQuery);
         $stmt->bindParam(':email', $email_usuario);
@@ -78,7 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        // Si no hay errores, hacer el update
         $update_query = "UPDATE tbl_usuario SET nombre_usuario = :nombre, email_usuario = :email, tipo_usuario = :tipo, password_usuario = :password WHERE id_usuario = :id";
         $update_stmt = $conn->prepare($update_query);
         $update_stmt->bindParam(':nombre', $nombre_usuario);
