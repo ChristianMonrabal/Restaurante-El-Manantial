@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once '../db/conexion.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -10,13 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare($query);
         $stmt->execute(['num_sillas' => $num_sillas, 'id_mesa' => $id_mesa]);
 
-        header("Location: ../public/recursos.php");
+        $_SESSION['message'] = "Mesa actualizada correctamente.";
+        header("Location: ../public/update_mesas.php?id=" . $id_mesa);
         exit();
     } catch (PDOException $e) {
-        echo "Error al actualizar la mesa: " . $e->getMessage();
+        $_SESSION['message'] = "Error al actualizar la mesa: " . $e->getMessage();
+        header("Location: ../public/update_mesas.php?id=" . $id_mesa);
+        exit();
     }
 } else {
     header("Location: ../public/recursos.php");
     exit();
 }
-?>

@@ -24,14 +24,6 @@ $stmt_franjas = $conn->prepare($query_franjas);
 $stmt_franjas->execute();
 $result_franjas = $stmt_franjas->fetchAll(PDO::FETCH_ASSOC);
 
-$query_enum = "SHOW COLUMNS FROM tbl_reserva LIKE 'cantidad_personas'";
-$stmt_enum = $conn->prepare($query_enum);
-$stmt_enum->execute();
-$column = $stmt_enum->fetch(PDO::FETCH_ASSOC);
-
-preg_match('/enum\((.*)\)/', $column['Type'], $matches);
-$enumValues = explode(',', $matches[1]);
-
 $ocupadas = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fecha_reserva = $_POST['fecha_reserva'];
@@ -51,9 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/usuarios.css">
-    <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
@@ -84,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="container mt-5">
-
+        <h2 class="text-center">Nueva reserva</h2>
             <form method="POST" action="../private/insert_reservas.php">
                 <div class="form-group mb-4">
                     <label for="nombre_reserva">Nombre de la reserva:</label>
@@ -95,11 +85,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="cantidad_personas">Cantidad de personas:</label>
                     <select class="form-control" id="cantidad_personas" name="cantidad_personas">
                         <option value="" disabled selected>Selecciona una opción</option>
-                        <?php foreach ($enumValues as $value): ?>
-                            <option value="<?php echo $value; ?>" <?php echo isset($_SESSION['cantidad_personas']) && $_SESSION['cantidad_personas'] == $value ? 'selected' : ''; ?>>
-                                <?php echo $value . " persona" . ($value > 1 ? 's' : ''); ?>
+                        <?php for ($i = 2; $i <= 10; $i++): ?>
+                            <option value="<?php echo $i; ?>" <?php echo isset($_SESSION['cantidad_personas']) && $_SESSION['cantidad_personas'] == $i ? 'selected' : ''; ?>>
+                                <?php echo $i; ?>
                             </option>
-                        <?php endforeach; ?>
+                        <?php endfor; ?>
                     </select>
                 </div>
 
@@ -133,35 +123,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <?php if (isset($_SESSION['errores'])): ?>
-                    <div class="error">
-                        <?php
-                        foreach ($_SESSION['errores'] as $error) {
-                            echo "<p>$error</p>";
-                        }
-                        unset($_SESSION['errores']);
-                        ?>
-                    </div>
-                <?php endif; ?>
 
                 <?php if (isset($_SESSION['mensaje_successful'])): ?>
-                    <div class="success">
+                    <div class="alert alert-success">
                         <p><?php echo $_SESSION['mensaje_successful']; ?></p>
                         <?php unset($_SESSION['mensaje_successful']); ?>
                     </div>
                 <?php endif; ?>
 
-                <?php if (isset($_SESSION['mensaje'])): ?>
-                    <div class="message">
-                        <p><?php echo $_SESSION['mensaje']; ?></p>
-                        <?php unset($_SESSION['mensaje']); ?>
+                <?php if (isset($_SESSION['mensaje_error_campos_vacios'])): ?>
+                    <div class="alert alert-danger">
+                        <p><?php echo $_SESSION['mensaje_error_campos_vacios']; ?></p>
+                        <?php unset($_SESSION['mensaje_error_campos_vacios']); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['mensaje_error_rango'])): ?>
+                    <div class="alert alert-danger">
+                        <p><?php echo $_SESSION['mensaje_error_rango']; ?></p>
+                        <?php unset($_SESSION['mensaje_error_rango']); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['mensaje_error_horario'])): ?>
+                    <div class="alert alert-danger">
+                        <p><?php echo $_SESSION['mensaje_error_horario']; ?></p>
+                        <?php unset($_SESSION['mensaje_error_horario']); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['mensaje_error_mesas'])): ?>
+                    <div class="alert alert-danger">
+                        <p><?php echo $_SESSION['mensaje_error_mesas']; ?></p>
+                        <?php unset($_SESSION['mensaje_error_mesas']); ?>
                     </div>
                 <?php endif; ?>
                 <button type="submit" class="btn btn-primary mt-3">Reservar</button>
             </form>
         </div>
     </div>
-
     <script src="../js/validation_add_reserva.js"></script>
 </body>
 </html>

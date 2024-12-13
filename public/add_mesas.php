@@ -27,6 +27,7 @@ if ($errors) {
     <title>Agregar Mesa</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/usuarios.css">
+    <link rel="stylesheet" href="../css/header.css">
     <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
 </head>
 <body>
@@ -47,6 +48,7 @@ if ($errors) {
         <span><?php echo $_SESSION['nombre_usuario']; ?></span>
     </div>
 </div>
+
 
 <div class="container mt-5">
     <h2>Agregar Mesa</h2>
@@ -78,6 +80,19 @@ if ($errors) {
                 <div class="invalid-feedback"><?php echo $errors['num_sillas']; ?></div>
             <?php endif; ?>
         </div>
+        <?php if (isset($_SESSION['mensaje_successful'])): ?>
+            <div class="alert alert-success">
+                <?php echo $_SESSION['mensaje_successful']; ?>
+                <?php unset($_SESSION['mensaje_successful']); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['mensaje_error'])): ?>
+            <div class="alert alert-danger">
+                <?php echo $_SESSION['mensaje_error']; ?>
+                <?php unset($_SESSION['mensaje_error']); ?>
+            </div>
+        <?php endif; ?>
         <button type="submit" class="btn btn-primary">Agregar Mesa</button>
     </form>
 </div>

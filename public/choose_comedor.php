@@ -51,9 +51,10 @@ try {
                 <?php 
                 $imagen_sala = $sala['imagen_sala'] ?: 'default.jpg';
                 ?>
-                <img src="../img/salas/<?php echo htmlspecialchars($imagen_sala); ?>" alt="<?php echo htmlspecialchars($sala['nombre_sala']); ?>" class="sala-img">
                 <div class="button-container">
-                    <button type="submit" name="sala" value="<?php echo htmlspecialchars($sala['nombre_sala']); ?>" class="select-button">Seleccionar</button>
+                    <button type="submit" name="sala" value="<?php echo htmlspecialchars($sala['nombre_sala']); ?>" style="background: none; border: none;">
+                        <img src="../img/salas/<?php echo htmlspecialchars($imagen_sala); ?>" alt="<?php echo htmlspecialchars($sala['nombre_sala']); ?>" class="sala-img">
+                    </button>
                 </div>
             </div>
         <?php endforeach; ?>

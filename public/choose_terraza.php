@@ -45,20 +45,20 @@ try {
     </div>
 
     <form action="gestion_mesas.php" method="post" class="options">
-    <?php foreach ($salasTerraza as $index => $sala): ?>
-        <div class="option terraza<?php echo $index + 1; ?>">
-            <h2><?php echo htmlspecialchars($sala['nombre_sala']); ?></h2>
-            <?php 
-            $imagen_sala = $sala['imagen_sala'] ?: 'default.jpg';
-            ?>
-            <img src="../img/salas/<?php echo htmlspecialchars($imagen_sala); ?>" alt="<?php echo htmlspecialchars($sala['nombre_sala']); ?>" class="sala-img">
-            <div class="button-container">
-                <button type="submit" name="sala" value="<?php echo htmlspecialchars($sala['nombre_sala']); ?>" class="select-button">Seleccionar</button>
+        <?php foreach ($salasTerraza as $index => $sala): ?>
+            <div class="option terraza<?php echo $index + 1; ?>">
+                <h2><?php echo htmlspecialchars($sala['nombre_sala']); ?></h2>
+                <?php 
+                $imagen_sala = $sala['imagen_sala'];
+                ?>
+                <div class="button-container">
+                    <button type="submit" name="sala" value="<?php echo htmlspecialchars($sala['nombre_sala']); ?>" style="background: none; border: none;">
+                        <img src="../img/salas/<?php echo htmlspecialchars($imagen_sala); ?>" alt="<?php echo htmlspecialchars($sala['nombre_sala']); ?>" class="sala-img">
+                    </button>
+                </div>
             </div>
-        </div>
-    <?php endforeach; ?>
-</form>
-
+        <?php endforeach; ?>
+    </form>
 
     <script src="../js/dashboard.js"></script>
 </body>

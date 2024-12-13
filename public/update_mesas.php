@@ -83,6 +83,12 @@ try {
                 ?>
             </select>
         </div>
+        <?php if (isset($_SESSION['message'])): ?>
+            <div class="alert <?php echo strpos($_SESSION['message'], 'Error') === false ? 'alert-success' : 'alert-danger'; ?>">
+                <p><?php echo $_SESSION['message']; ?></p>
+            </div>
+            <?php unset($_SESSION['message']); ?>
+        <?php endif; ?>
         <button type="submit" class="btn btn-success">Guardar Cambios</button>
         <a href="./recursos.php" class="btn btn-secondary">Cancelar</a>
     </form>

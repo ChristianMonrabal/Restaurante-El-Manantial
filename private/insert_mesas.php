@@ -33,10 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':num_sillas', $num_sillas, PDO::PARAM_INT);
 
     if ($stmt->execute()) {
-        header("Location: ../public/recursos.php");
+        $_SESSION['mensaje_successful'] = "Mesa agregada correctamente.";
+        header("Location: ../public/add_mesas.php");
         exit();
     } else {
-        header("Location: ../public/recursos.php");
+        $_SESSION['mensaje_error'] = "Error al agregar la mesa.";
+        header("Location: ../public/add_mesas.php");
         exit();
     }
 }
+?>

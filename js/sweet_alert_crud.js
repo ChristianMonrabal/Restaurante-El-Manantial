@@ -1,4 +1,3 @@
-// Función general para mostrar SweetAlert con redirección a la página anterior
 function showSweetAlert(icon, title, text) {
     Swal.fire({
         icon: icon,
@@ -10,7 +9,6 @@ function showSweetAlert(icon, title, text) {
     });
 }
 
-// Función para confirmar la eliminación de un elemento
 function confirmarEliminar(id) {
     Swal.fire({
         title: '¿Estás seguro?',
@@ -48,7 +46,26 @@ function confirmarEliminarUsuario(id) {
     });
 }
 
-// Función para mostrar SweetAlert de éxito y volver a la página anterior
+function confirmarEliminarMesa(id) {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "No podrás revertir esta acción",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = `../private/delete_reservas.php?id_reserva=${id}`;
+        } else {
+            window.location.href = `../public/reservas.php`;
+        }
+    });
+}
+
+
 function showSuccessAlert(title, text) {
     Swal.fire({
         icon: 'success',
@@ -59,7 +76,6 @@ function showSuccessAlert(title, text) {
     });
 }
 
-// Función para mostrar SweetAlert de error y volver a la página anterior
 function showErrorAlert(title, text) {
     Swal.fire({
         icon: 'error',

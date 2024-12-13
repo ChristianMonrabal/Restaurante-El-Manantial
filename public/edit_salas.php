@@ -115,11 +115,7 @@ if (isset($_SESSION['message'])) {
 
         <?php if ($errors): ?>
             <div class="alert alert-danger">
-                <ul>
-                    <?php foreach ($errors as $error): ?>
-                        <li><?php echo $error; ?></li>
-                    <?php endforeach; ?>
-                </ul>
+                <p><?php echo $errors[0]; ?></p>
             </div>
         <?php endif; ?>
 
@@ -127,7 +123,6 @@ if (isset($_SESSION['message'])) {
         <a href="./recursos.php" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>

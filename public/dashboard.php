@@ -47,13 +47,13 @@ if (!isset($_SESSION['loggedin'])) {
 
 <div class="options">
     <a href="./choose_terraza.php" class="option terraza">
-        <h2>Terraza</h2>
+        <h2>Terrazas</h2>
     </a>
     <a href="./choose_comedor.php" class="option comedor">
-        <h2>Comedor</h2>
+        <h2>Comedores</h2>
     </a>
     <a href="./choose_privada.php" class="option privadas">
-        <h2>Sala privada</h2>
+        <h2>Salas privada</h2>
     </a>
 </div>
 

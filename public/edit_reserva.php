@@ -18,12 +18,11 @@ if (isset($_GET['id_reserva'])) {
     $id_reserva = $_GET['id_reserva'];
 
     $query_reserva = "SELECT r.id_reserva, r.nombre_reserva, r.cantidad_personas, r.id_sala, r.fecha_reserva, r.id_franja, u.nombre_usuario
-                    FROM tbl_reserva r
-                    JOIN tbl_usuario u ON r.id_usuario = u.id_usuario
-                    WHERE r.id_reserva = :id_reserva AND r.id_usuario = :usuario_id";
+                        FROM tbl_reserva r
+                        JOIN tbl_usuario u ON r.id_usuario = u.id_usuario
+                        WHERE r.id_reserva = :id_reserva";
     $stmt_reserva = $conn->prepare($query_reserva);
     $stmt_reserva->bindParam(':id_reserva', $id_reserva, PDO::PARAM_INT);
-    $stmt_reserva->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
     $stmt_reserva->execute();
     $reserva = $stmt_reserva->fetch(PDO::FETCH_ASSOC);
 
@@ -46,13 +45,7 @@ $stmt_franjas = $conn->prepare($query_franjas);
 $stmt_franjas->execute();
 $result_franjas = $stmt_franjas->fetchAll(PDO::FETCH_ASSOC);
 
-$query_enum = "SHOW COLUMNS FROM tbl_reserva LIKE 'cantidad_personas'";
-$stmt_enum = $conn->prepare($query_enum);
-$stmt_enum->execute();
-$column = $stmt_enum->fetch(PDO::FETCH_ASSOC);
-
-preg_match('/enum\((.*)\)/', $column['Type'], $matches);
-$enumValues = explode(',', $matches[1]);
+$opciones_cantidad_personas = ['2', '3', '4', '5', '6', '10'];
 
 $ocupadas = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -100,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="container mt-5">
-        <h1 class="text-center">Editar Reserva</h1>
+        <h2 class="text-center">Editar reserva</h2>
         <form method="POST" action="../private/update_reserva.php">
             <input type="hidden" name="id_reserva" value="<?php echo $reserva['id_reserva']; ?>">
 
@@ -112,14 +105,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="form-group mb-4">
                 <label for="cantidad_personas">Cantidad de personas:</label>
                 <select class="form-control" id="cantidad_personas" name="cantidad_personas">
-                    <option value="" disabled>Selecciona una opción</option>
-                    <?php foreach ($enumValues as $value): ?>
-                        <option value="<?php echo $value; ?>" <?php echo $reserva['cantidad_personas'] == $value ? 'selected' : ''; ?>>
-                            <?php echo $value . " persona" . ($value > 1 ? 's' : ''); ?>
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <?php for ($i = 2; $i <= 10; $i++): ?>
+                        <option value="<?php echo $i; ?>" <?php echo $reserva['cantidad_personas'] == $i ? 'selected' : ''; ?>>
+                            <?php echo $i; ?>
                         </option>
-                    <?php endforeach; ?>
+                    <?php endfor; ?>
                 </select>
             </div>
+
 
             <div class="form-group mb-4">
                 <label for="id_sala">Seleccionar sala:</label>
@@ -152,8 +146,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
             </div>
             <?php
+                if (isset($_SESSION['mensaje_successful'])) {
+                    echo '<div class="success">' . $_SESSION['mensaje_successful'] . '</div>';
+                    unset($_SESSION['mensaje_successful']);
+                }
+                ?>
+            <?php
                 if (isset($_SESSION['mensaje'])) {
-                    echo '<div class="error" role="alert">' . $_SESSION['mensaje'] . '</div>';
+                    echo '<div class="error">' . $_SESSION['mensaje'] . '</div>';
                     unset($_SESSION['mensaje']);
                 }
                 ?>

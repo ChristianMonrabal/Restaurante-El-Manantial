@@ -30,15 +30,10 @@ if (isset($_POST['id_sala'])) {
 
     $errors = [];
 
-    if (empty($nombre_sala)) {
-        $errors[] = "El nombre de la sala es obligatorio.";
+    if (empty($nombre_sala) || empty($tipo_sala) || empty($capacidad_total) || !filter_var($capacidad_total, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])) {
+        $errors[] = "Todos los campos son obligatorios.";
     }
-    if (empty($tipo_sala)) {
-        $errors[] = "El tipo de sala es obligatorio.";
-    }
-    if (empty($capacidad_total) || !filter_var($capacidad_total, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])) {
-        $errors[] = "La capacidad total debe ser un número entero positivo.";
-    }
+    
 
     $image_name = $sala['imagen_sala'];
     if ($imagen_sala['error'] === UPLOAD_ERR_OK) {
@@ -75,7 +70,7 @@ if (isset($_POST['id_sala'])) {
 
         if ($stmt->execute()) {
             $_SESSION['message'] = "Sala actualizada correctamente.";
-            header("Location: ../public/recursos.php");
+            header("Location: ../public/edit_salas.php?id=" . $id_sala);
             exit();
         } else {
             $errors[] = "Error al actualizar la sala en la base de datos.";
@@ -84,7 +79,7 @@ if (isset($_POST['id_sala'])) {
 
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
-        header("Location: ../public/edit_salas.php?id_sala=" . $id_sala);
+        header("Location: ../public/edit_salas.php?id=" . $id_sala);
         exit();
     }
 }
