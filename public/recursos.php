@@ -81,10 +81,11 @@ $salas = listarSalas($conn);
 <br><br>
 
 <div id="salasTable" class="table-responsive">
+    <h1 class="text-center">Gestión de salas</h1>
     <table class="table table-bordered table-striped" style="table-layout: fixed; width: 80%; margin: 0 auto;">
         <thead class="table-dark">
         <tr>
-            <th>Nombre de Sala</th>
+            <th>Nombre de sala</th>
             <th>Acciones</th>
         </tr>
         </thead>
@@ -103,11 +104,12 @@ $salas = listarSalas($conn);
 </div>
 
 <div id="mesasTable" class="table-responsive" style="display: none;">
+    <h1 class="text-center">Gestión de mesas</h1>
     <table class="table table-bordered table-striped" style="table-layout: fixed; width: 80%; margin: 0 auto;">
         <thead class="table-dark">
         <tr>
-            <th>Nº de Mesa</th>
-            <th>Número de Sillas</th>
+            <th>Nº de mesa</th>
+            <th>Número de sillas</th>
             <th>Estado</th>
             <th>Sala</th>
             <th>Acciones</th>

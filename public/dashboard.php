@@ -30,19 +30,9 @@ if (!isset($_SESSION['loggedin'])) {
     <?php endif; ?>
 
     <div class="user-info">
-        <a href="../private/logout.php" class="logout-icon">
-                <i class="fas fa-sign-out-alt" style="font-size: 20px; color: #000;"></i>
-        </a>
+        <i class="fas fa-sign-out-alt logout-icon" onclick="confirmarCerrarSesion()" style="font-size: 20px; color: #000;"></i>
         <span><?php echo $_SESSION['nombre_usuario']; ?></span>
     </div>
-    <div class="hamburger" id="hamburger-icon">
-        &#9776;
-    </div>
-</div>
-<div class="mobile-nav" id="mobile-nav">
-    <a href="./historial.php">Historial</a>
-    <a href="#"><?php echo $_SESSION['nombre_usuario']; ?></a>
-    <a href="../private/logout.php">Cerrar Sesión</a>
 </div>
 
 <div class="options">
@@ -59,5 +49,7 @@ if (!isset($_SESSION['loggedin'])) {
 
 <script src="../js/dashboard.js"></script>
 <script src="../js/navbar.js"></script>
+<script src="../js/logout.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

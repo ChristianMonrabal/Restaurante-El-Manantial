@@ -70,18 +70,23 @@ $result_reservas = $stmt_reservas->fetchAll(PDO::FETCH_ASSOC);
         </a>
         <span><?php echo $_SESSION['nombre_usuario']; ?></span>
     </div>
-    <div class="hamburger" id="hamburger-icon">
-        &#9776;
-    </div>
-</div>
-<div class="mobile-nav" id="mobile-nav">
-    <a href="./historial.php">Historial</a>
-    <a href="#"><?php echo $_SESSION['nombre_usuario']; ?></a>
-    <a href="../private/logout.php">Cerrar Sesión</a>
 </div>
 
 <div class="container mt-5">
     <h1 class="text-center">Gestión de Reservas</h1>
+
+    <div class="row mb-3">
+        <div class="col-md-5">
+            <input type="text" id="filtroNombre" class="form-control" placeholder="Buscar por nombre de reserva">
+        </div>
+        <div class="col-md-5">
+            <input type="date" id="filtroFecha" class="form-control" placeholder="Buscar por fecha de reserva">
+        </div>
+        <div class="col-md-2">
+        <button id="borrarFiltros" class="btn btn-outline-danger btn-sm w-100" style="display: none;">Borrar Filtros</button>
+        </div>
+    </div>
+
     <table class="table table-bordered table-striped" style="table-layout: fixed; width: 90%; margin: 0 auto;">
         <thead class="table-dark">
             <tr>
@@ -95,7 +100,7 @@ $result_reservas = $stmt_reservas->fetchAll(PDO::FETCH_ASSOC);
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tablaReservas">
             <?php foreach ($result_reservas as $reserva): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($reserva['nombre_reserva']); ?></td>
@@ -118,5 +123,6 @@ $result_reservas = $stmt_reservas->fetchAll(PDO::FETCH_ASSOC);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../js/sweet_alert_crud.js"></script>
+<script src="../js/filtros_reserva.js"></script>
 </body>
 </html>

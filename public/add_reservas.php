@@ -48,29 +48,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="navbar">
-        <a href="../index.php">
-            <img src="../img/icon.png" class="icon">
-        </a>
-        <a href="./historial.php" class="right-link">Historial</a>
-        <a href="./reservas.php" class="right-link">Reservas</a>
-        <?php if ($_SESSION['tipo_usuario'] === 'administrador'): ?>
-            <a href="./recursos.php" class="right-link">Recursos</a>
-            <a href="./usuarios.php" class="right-link">Usuarios</a>
-        <?php endif; ?>
-        <div class="user-info">
-            <a href="../private/logout.php" class="logout-icon">
-                <i class="fas fa-sign-out-alt" style="font-size: 20px; color: #000; margin-right: 10px;"></i>
+            <a href="../index.php">
+                <img src="../img/icon.png" class="icon">
             </a>
-            <span><?php echo $_SESSION['nombre_usuario']; ?></span>
-        </div>
-        <div class="hamburger" id="hamburger-icon">
-            &#9776;
-        </div>
-    </div>
-    <div class="mobile-nav" id="mobile-nav">
-        <a href="./historial.php">Historial</a>
-        <?php echo $_SESSION['nombre_usuario']; ?>
-        <a href="../private/logout.php">Cerrar Sesión</a>
+            <a href="./historial.php" class="right-link">Historial</a>
+            <a href="./reservas.php" class="right-link">Reservas</a>
+            <?php if ($_SESSION['tipo_usuario'] === 'administrador'): ?>
+                <a href="./recursos.php" class="right-link">Recursos</a>
+                <a href="./usuarios.php" class="right-link">Usuarios</a>
+            <?php endif; ?>
+            <div class="user-info">
+                <a href="../private/logout.php" class="logout-icon">
+                    <i class="fas fa-sign-out-alt" style="font-size: 20px; color: #000; margin-right: 10px;"></i>
+                </a>
+                <span><?php echo $_SESSION['nombre_usuario']; ?></span>
+            </div>
     </div>
 
     <div class="container mt-5">

@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sala'])) {
         $resultCapacidad = $stmtCapacidad->fetch(PDO::FETCH_ASSOC);
 
         if ($resultCapacidad) {
-            echo "<h2 style='text-align: center;'>Capacidad total de la sala: " . htmlspecialchars($resultCapacidad['capacidad_total']) . "</h2>";
+            echo "";
         } else {
             echo "No se encontró la sala especificada.";
         }

@@ -43,72 +43,72 @@ unset($_SESSION['passwordError']);
     <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
 </head>
 <body>
-<div class="navbar">
-    <a href="../index.php">
-        <img src="../img/icon.png" class="icon">
-    </a>
-    <a href="./historial.php" class="right-link">Historial</a>
-    <a href="./recursos.php" class="right-link">Recursos</a>
-    <a href="./usuarios.php" class="right-link">Usuarios</a>
-    <div class="user-info">
-        <div class="dropdown">
-            <i class="fas fa-caret-down" style="font-size: 16px; margin-right: 10px;"></i>
-            <div class="dropdown-content">
-                <a href="../private/logout.php">Cerrar Sesión</a>
-            </div>
+    <div class="navbar">
+        <a href="../index.php">
+            <img src="../img/icon.png" class="icon">
+        </a>
+        <a href="./historial.php" class="right-link">Historial</a>
+        <a href="./reservas.php" class="right-link">Reservas</a>
+        <?php if ($_SESSION['tipo_usuario'] === 'administrador'): ?>
+            <a href="./recursos.php" class="right-link">Recursos</a>
+            <a href="./usuarios.php" class="right-link">Usuarios</a>
+        <?php endif; ?>
+        <div class="user-info">
+            <a href="../private/logout.php" class="logout-icon">
+                <i class="fas fa-sign-out-alt" style="font-size: 20px; color: #000; margin-right: 10px;"></i>
+            </a>
+            <span><?php echo $_SESSION['nombre_usuario']; ?></span>
         </div>
-        <span><?php echo $_SESSION['nombre_usuario']; ?></span>
     </div>
-</div>
-<div class="container mt-5">
-    <h2 class="text-center">Agregar Usuario</h2>
-    <form action="../private/add_usuario.php" method="POST" id="formularioAgregarUsuario">
-        <div class="form-group">
-            <label for="nombre_usuario">Nombre de Usuario</label>
-            <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" value="<?php echo htmlspecialchars($nombre); ?>">
-            <?php if ($nombreError): ?>
-                <small class="text-danger"><?php echo $nombreError; ?></small>
-            <?php endif; ?>
-        </div>
-        <div class="form-group">
-            <label for="email_usuario">Correo Electrónico</label>
-            <input type="email" class="form-control" id="email_usuario" name="email_usuario" value="<?php echo htmlspecialchars($email); ?>">
-            <?php if ($emailError): ?>
-                <small class="text-danger"><?php echo $emailError; ?></small>
-            <?php endif; ?>
-        </div>
-        <div class="form-group">
-            <label for="tipo_usuario">Tipo de Usuario</label>
-            <select class="form-control" id="tipo_usuario" name="tipo_usuario">
-                <option value="">Seleccione un tipo</option>
-                <?php foreach ($enumValues as $tipoOption): ?>
-                    <option value="<?php echo $tipoOption; ?>" <?php echo ($tipoOption === $tipo) ? 'selected' : ''; ?>>
-                        <?php echo ucfirst($tipoOption); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <?php if ($tipoError): ?>
-                <small class="text-danger"><?php echo $tipoError; ?></small>
-            <?php endif; ?>
-        </div>
-        <div class="form-group">
-            <label for="password_usuario">Contraseña</label>
-            <input type="password" class="form-control" id="password_usuario" name="password_usuario">
-            <?php if ($passwordError): ?>
-                <small class="text-danger"><?php echo $passwordError; ?></small>
-            <?php endif; ?>
-        </div>
+    <div class="container mt-5">
+        <h2 class="text-center">Agregar Usuario</h2>
+        <form action="../private/add_usuario.php" method="POST" id="formularioAgregarUsuario">
+            <div class="form-group">
+                <label for="nombre_usuario">Nombre de Usuario</label>
+                <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" value="<?php echo htmlspecialchars($nombre); ?>">
+                <?php if ($nombreError): ?>
+                    <small class="text-danger"><?php echo $nombreError; ?></small>
+                <?php endif; ?>
+            </div>
+            <div class="form-group">
+                <label for="email_usuario">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email_usuario" name="email_usuario" value="<?php echo htmlspecialchars($email); ?>">
+                <?php if ($emailError): ?>
+                    <small class="text-danger"><?php echo $emailError; ?></small>
+                <?php endif; ?>
+            </div>
+            <div class="form-group">
+                <label for="tipo_usuario">Tipo de Usuario</label>
+                <select class="form-control" id="tipo_usuario" name="tipo_usuario">
+                    <option value="">Seleccione un tipo</option>
+                    <?php foreach ($enumValues as $tipoOption): ?>
+                        <option value="<?php echo $tipoOption; ?>" <?php echo ($tipoOption === $tipo) ? 'selected' : ''; ?>>
+                            <?php echo ucfirst($tipoOption); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <?php if ($tipoError): ?>
+                    <small class="text-danger"><?php echo $tipoError; ?></small>
+                <?php endif; ?>
+            </div>
+            <div class="form-group">
+                <label for="password_usuario">Contraseña</label>
+                <input type="password" class="form-control" id="password_usuario" name="password_usuario">
+                <?php if ($passwordError): ?>
+                    <small class="text-danger"><?php echo $passwordError; ?></small>
+                <?php endif; ?>
+            </div>
 
-        <button type="submit" class="btn btn-primary btn-block">Agregar</button>
-        <a href="./usuarios.php" class="btn btn-secondary btn-block">Cancelar</a>
-    </form>
-</div>
+            <button type="submit" class="btn btn-primary btn-block">Agregar</button>
+            <a href="./usuarios.php" class="btn btn-secondary btn-block">Cancelar</a>
+        </form>
+    </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="../js/validation_add_usuario.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../js/validation_add_usuario.js"></script>
 </body>
 </html>
 

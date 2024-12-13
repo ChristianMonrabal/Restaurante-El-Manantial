@@ -31,15 +31,17 @@ try {
 <body>
     <div class="navbar">
         <a href="../index.php">
-            <img src="../img/icon.png" class="icon" alt="Icono">
+            <img src="../img/icon.png" class="icon">
         </a>
+        <a href="./historial.php" class="right-link">Historial</a>
+        <a href="./reservas.php" class="right-link">Reservas</a>
+        <?php if ($_SESSION['tipo_usuario'] === 'administrador'): ?>
+            <a href="./recursos.php" class="right-link">Recursos</a>
+            <a href="./usuarios.php" class="right-link">Usuarios</a>
+        <?php endif; ?>
+
         <div class="user-info">
-            <div class="dropdown">
-                <i class="fas fa-caret-down" style="font-size: 16px; margin-right: 10px;"></i>
-                <div class="dropdown-content">
-                    <a href="../private/logout.php">Cerrar Sesión</a>
-                </div>
-            </div>
+            <i class="fas fa-sign-out-alt logout-icon" onclick="confirmarCerrarSesion()" style="font-size: 20px; color: #000;"></i>
             <span><?php echo $_SESSION['nombre_usuario']; ?></span>
         </div>
     </div>

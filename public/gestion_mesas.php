@@ -27,19 +27,28 @@ include_once '../private/gestion_salas.php';
 <body>
     <div class="navbar">
         <a href="../index.php">
-            <img src="../img/icon.png" class="icon" alt="Icono">
+            <img src="../img/icon.png" class="icon">
         </a>
+        <a href="./historial.php" class="right-link">Historial</a>
+        <a href="./reservas.php" class="right-link">Reservas</a>
+        <?php if ($_SESSION['tipo_usuario'] === 'administrador'): ?>
+            <a href="./recursos.php" class="right-link">Recursos</a>
+            <a href="./usuarios.php" class="right-link">Usuarios</a>
+        <?php endif; ?>
         <div class="user-info">
-            <div class="dropdown">
-                <i class="fas fa-caret-down" style="font-size: 16px; margin-right: 10px;"></i>
-                <div class="dropdown-content">
-                    <a href="../private/logout.php">Cerrar Sesión</a>
-                </div>
-            </div>
+            <a href="../private/logout.php" class="logout-icon">
+                <i class="fas fa-sign-out-alt" style="font-size: 20px; color: #000; margin-right: 10px;"></i>
+            </a>
             <span><?php echo $_SESSION['nombre_usuario']; ?></span>
         </div>
     </div>
-<?php if ($sala): ?>
+    <?php if ($sala): ?>
+    <?php if ($resultCapacidad): ?>
+        <h2 style='text-align: center;'>Capacidad total de la sala: <?php echo htmlspecialchars($resultCapacidad['capacidad_total']); ?></h2>
+    <?php else: ?>
+        <h2 style='text-align: center;'>No se encontró la sala especificada.</h2>
+    <?php endif; ?>
+
     <div class="slider-container">
         <button id="prevArrow" class="arrow-btn">&lt;</button>
         <form method="POST" action="../private/proccess_mesas.php?sala">
@@ -81,6 +90,7 @@ include_once '../private/gestion_salas.php';
         <button id="nextArrow" class="arrow-btn">&gt;</button>
     </div>
 <?php endif; ?>
-<script src="../js/slider.js"></script>
+
+    <script src="../js/slider.js"></script>
 </body>
 </html>

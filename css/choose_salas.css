@@ -10,72 +10,85 @@ body {
     color: #fff;
     padding: 8px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Para que los elementos se distribuyan entre el logo y la parte derecha */
     align-items: center;
 }
 
 .icon {
-    height: 60px;
-    width: 40px;
+    height: 90px;
+    width: 85px;
 }
 
 .navbar .user-info {
     display: flex;
     align-items: center;
-    margin-right: 20px;
+    justify-content: flex-end; /* Esto alinea el contenido de la derecha */
+    margin-left: auto; /* Asegura que la parte derecha se coloque en el extremo */
+    margin-right: 20px; /* Espacio a la derecha */
 }
 
 .navbar .user-info span {
-    margin-left: 40px;
-    margin-right: 20px;
+    margin-left: 10px;
 }
 
-.dropdown i {
-    margin-right: 25px;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-    margin-right: 20px;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
+.navbar .user-info .history-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #d4a373;
+    color: white;
+    border-radius: 5px;
     text-decoration: none;
-    display: block;
+    font-size: 14px;
+    transition: background-color 0.3s;
 }
 
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
+.navbar .user-info .add-user-button {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border: 2px solid white;
+    border-radius: 15px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* Uso de grid para las opciones */
+.navbar .user-info .add-user-button:hover {
+    background-color: #d4a373;
+    color: #fff;
+}
+
+
+.navbar .user-info .history-button:hover {
+    background-color: #b97f52;
+}
+
+.right-link {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border: 2px solid white;
+    border-radius: 15px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.right-link:hover {
+    background-color: #d4a373;
+    color: #fff;
+}
+
 .options {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20%, 1fr)); /* Auto ajusta el número de columnas */
-    gap: 20px; /* Espacio entre las opciones */
+    grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
+    gap: 20px;
     margin: 20px auto;
     width: 80%;
-    max-width: 1200px; /* Puedes ajustar el ancho máximo */
+    max-width: 1200px;
     height: auto;
 }
 
-/* Mantener la misma altura de las opciones */
 .option {
     padding: 20px;
     text-align: center;
@@ -86,7 +99,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: 200px; /* Mantener altura fija */
+    min-height: 200px;
     border-radius: 10px;
     border: 1px solid #d4a373;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;

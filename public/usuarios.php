@@ -13,7 +13,7 @@ if ($_SESSION['tipo_usuario'] !== 'administrador') {
 
 include_once '../db/conexion.php';
 
-$query = "SELECT * FROM tbl_usuario";
+$query = "SELECT * FROM tbl_usuario ORDER BY id_usuario DESC";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -60,11 +60,24 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <div class="container mt-5">
-    <?php
-        if (isset($_GET['error'])) {
-            echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error']) . '</div>';
-        }
-    ?>
+    <h1 class="text-center">Gestión de Usuarios</h1>
+    <div class="row mb-3">
+        <div class="col-md-5">
+            <input type="text" id="filtroUsuario" class="form-control" placeholder="Buscar por usuario">
+        </div>
+        <div class="col-md-5">
+            <select id="filtroPuesto" class="form-control">
+                <option value="">Seleccionar puesto</option>
+                <option value="camarero">Camarero</option>
+                <option value="gerente">Gerente</option>
+                <option value="mantenimiento">Mantenimiento</option>
+                <option value="administrador">Administrador</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button id="borrarFiltros" class="btn btn-outline-danger btn-sm w-100" style="display: none;">Borrar Filtros</button>
+        </div>
+    </div>
 
     <table class="table table-bordered">
         <thead class="thead-dark">
@@ -75,20 +88,30 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody>
-            <?php foreach ($usuarios as $usuario): ?>
-            <tr>
-                <td><?php echo $usuario['nombre_usuario']; ?></td>
-                <td><?php echo $usuario['email_usuario']; ?></td>
-                <td><?php echo ucfirst($usuario['tipo_usuario']); ?></td>
-                <td>
-                <a href="update_usuario.php?id=<?php echo $usuario['id_usuario']; ?>" class="btn btn-warning btn-sm">Editar</a>
-                <button class="btn btn-danger btn-sm" onclick="confirmarEliminarUsuario(<?php echo $usuario['id_usuario']; ?>)">Eliminar</button>
-                </td>
-            </tr>
-            <?php endforeach; ?>
+        <tbody id="tablaUsuarios">
+            <?php if (count($usuarios) > 0): ?>
+                <?php foreach ($usuarios as $usuario): ?>
+                <tr>
+                    <td><?php echo $usuario['nombre_usuario']; ?></td>
+                    <td><?php echo $usuario['email_usuario']; ?></td>
+                    <td><?php echo ucfirst($usuario['tipo_usuario']); ?></td>
+                    <td>
+                    <a href="update_usuario.php?id=<?php echo $usuario['id_usuario']; ?>" class="btn btn-warning btn-sm">Editar</a>
+                    <button class="btn btn-danger btn-sm" onclick="confirmarEliminarUsuario(<?php echo $usuario['id_usuario']; ?>)">Eliminar</button>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="4" class="text-center">No se encontraron resultados.</td>
+                </tr>
+            <?php endif; ?>
         </tbody>
     </table>
+
+    <div id="mensajeNoResultados" class="text-center" style="display: none;">
+        <p>No se encontraron usuarios con los filtros aplicados.</p>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -96,6 +119,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="../js/filtros_usuarios.js"></script>
+</script>
 </body>
 </html>
-

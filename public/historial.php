@@ -81,8 +81,11 @@ if (isset($_SESSION['usuario_id'])) {
                 ?>
             </select>
             <button type="submit">Filtrar</button>
-        </form>
 
+            <?php if (!empty($_GET['camarero']) || !empty($_GET['mesa']) || !empty($_GET['fecha']) || !empty($_GET['sala'])): ?>
+                <a href="historial.php" class="btn" style="background-color: red;">Borrar Filtros</a>
+            <?php endif; ?>
+        </form>
         <a href="historial.php?action=sala_concurrida" class="btn">Sala Más Concurrida</a>
         <a href="historial.php?action=mesa_concurrida" class="btn margen">Mesa Más Concurrida</a>
 

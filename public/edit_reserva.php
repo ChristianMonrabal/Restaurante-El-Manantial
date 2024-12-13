@@ -87,9 +87,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </a>
             <span><?php echo $_SESSION['nombre_usuario']; ?></span>
         </div>
-        <div class="hamburger" id="hamburger-icon">
-            &#9776;
-        </div>
     </div>
 
     <div class="container mt-5">

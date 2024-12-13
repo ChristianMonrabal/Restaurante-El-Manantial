@@ -36,19 +36,18 @@ if ($errors) {
         <img src="../img/icon.png" class="icon">
     </a>
     <a href="./historial.php" class="right-link">Historial</a>
-    <a href="./recursos.php" class="right-link">Recursos</a>
-    <a href="./usuarios.php" class="right-link">Usuarios</a>
+    <a href="./reservas.php" class="right-link">Reservas</a>
+    <?php if ($_SESSION['tipo_usuario'] === 'administrador'): ?>
+        <a href="./recursos.php" class="right-link">Recursos</a>
+        <a href="./usuarios.php" class="right-link">Usuarios</a>
+    <?php endif; ?>
     <div class="user-info">
-        <div class="dropdown">
-            <i class="fas fa-caret-down" style="font-size: 16px; margin-right: 10px;"></i>
-            <div class="dropdown-content">
-                <a href="../private/logout.php">Cerrar Sesión</a>
-            </div>
-        </div>
+        <a href="../private/logout.php" class="logout-icon">
+            <i class="fas fa-sign-out-alt" style="font-size: 20px; color: #000; margin-right: 10px;"></i>
+        </a>
         <span><?php echo $_SESSION['nombre_usuario']; ?></span>
     </div>
 </div>
-
 
 <div class="container mt-5">
     <h2>Agregar Mesa</h2>
